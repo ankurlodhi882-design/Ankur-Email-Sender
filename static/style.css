@@ -1,0 +1,912 @@
+:root {
+
+    --bg: #f5f8fc;
+
+    --card: #ffffff;
+
+    --text: #10213d;
+
+    --muted: #71809a;
+
+    --border: #dce4ef;
+
+    --blue: #467df5;
+
+    --green: #10b981;
+
+    --red: #ef4444;
+
+    --orange: #f59e0b;
+
+    --shadow:
+        0 4px 13px
+        rgba(24, 42, 72, 0.10);
+
+}
+
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+
+body {
+
+    margin: 0;
+
+    background: var(--bg);
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    color: var(--text);
+
+}
+
+
+/* ========================================
+   MAIN PAGE
+======================================== */
+
+.page {
+
+    max-width: 1110px;
+
+    margin: 0 auto;
+
+    padding: 30px 0;
+
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.topbar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 42px;
+
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    color: #566ff1;
+
+    letter-spacing: -1px;
+
+}
+
+
+.brand-shield,
+.brand-icon {
+
+    font-size: 34px;
+
+    color: #3f7df5;
+
+}
+
+
+/* ========================================
+   LOGOUT
+======================================== */
+
+.logout {
+
+    background: #fff;
+
+    border: 1px solid #ffb9b9;
+
+    color: #ff4c4c;
+
+    border-radius: 8px;
+
+    padding: 7px 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+}
+
+
+.logout:hover {
+
+    background: #fff6f6;
+
+}
+
+
+/* ========================================
+   PAGE TITLE
+======================================== */
+
+.page-title {
+
+    font-size: 21px;
+
+    margin: 0 0 28px;
+
+    font-weight: 800;
+
+}
+
+
+/* ========================================
+   MAIN GRID
+======================================== */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 20px;
+
+}
+
+
+/* ========================================
+   CARD
+======================================== */
+
+.card {
+
+    background: var(--card);
+
+    border-radius: 13px;
+
+    box-shadow: var(--shadow);
+
+    padding: 30px;
+
+}
+
+
+.compose {
+
+    min-height: 690px;
+
+}
+
+
+h2 {
+
+    font-size: 18px;
+
+    margin: 0 0 12px;
+
+    font-weight: 800;
+
+}
+
+
+/* ========================================
+   LABELS
+======================================== */
+
+label {
+
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin: 0 0 9px;
+
+}
+
+
+/* ========================================
+   FORM GRID
+======================================== */
+
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 22px 16px;
+
+    margin-bottom: 22px;
+
+}
+
+
+/* ========================================
+   INPUT
+======================================== */
+
+input,
+textarea {
+
+    width: 100%;
+
+    border: 1px solid var(--border);
+
+    border-radius: 7px;
+
+    background: #fff;
+
+    color: var(--text);
+
+    font: inherit;
+
+    outline: none;
+
+}
+
+
+input {
+
+    height: 43px;
+
+    padding: 0 14px;
+
+}
+
+
+textarea {
+
+    padding: 14px;
+
+    resize: vertical;
+
+}
+
+
+input:focus,
+textarea:focus {
+
+    border-color: #89a9f9;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(70, 125, 245, 0.09);
+
+}
+
+
+/* ========================================
+   MESSAGE
+======================================== */
+
+.message {
+
+    height: 275px;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* ========================================
+   PASSWORD
+======================================== */
+
+.password-wrap {
+
+    position: relative;
+
+}
+
+
+.password-wrap input {
+
+    padding-right: 40px;
+
+}
+
+
+.eye {
+
+    position: absolute;
+
+    right: 9px;
+
+    top: 8px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #71809a;
+
+    cursor: pointer;
+
+    height: 28px;
+
+}
+
+
+/* ========================================
+   SPAM PROTECTION
+======================================== */
+
+.spam-title {
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    margin-bottom: 10px;
+
+}
+
+
+.captcha-demo {
+
+    width: 282px;
+
+    min-height: 60px;
+
+    border: 1px solid #d8d8d8;
+
+    background: #fafafa;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px;
+
+    font-size: 13px;
+
+}
+
+
+.captcha-demo .check {
+
+    background: #21a65a;
+
+    color: #fff;
+
+    width: 28px;
+
+    height: 28px;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 19px;
+
+}
+
+
+.captcha-demo small {
+
+    display: block;
+
+    color: #777;
+
+    margin-left: auto;
+
+    font-size: 9px;
+
+    max-width: 90px;
+
+}
+
+
+/* ========================================
+   RIGHT COLUMN
+======================================== */
+
+.right-col {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 22px;
+
+}
+
+
+/* ========================================
+   RECIPIENTS
+======================================== */
+
+.recipients {
+
+    min-height: 249px;
+
+}
+
+
+.section-head {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+}
+
+
+.section-head p {
+
+    font-size: 12px;
+
+    color: var(--muted);
+
+    margin: 0 0 10px;
+
+}
+
+
+.badge {
+
+    background: #eef5ff;
+
+    color: #4281f5;
+
+    border-radius: 14px;
+
+    padding: 5px 9px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+}
+
+
+.recipient-box {
+
+    height: 142px;
+
+}
+
+
+.invalid {
+
+    color: #d94c4c;
+
+    font-size: 11px;
+
+    margin-top: 7px;
+
+    min-height: 14px;
+
+}
+
+
+/* ========================================
+   PROGRESS
+======================================== */
+
+.progress-card {
+
+    min-height: 423px;
+
+}
+
+
+.stats {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 15px;
+
+    margin: 5px 0 22px;
+
+}
+
+
+.stat {
+
+    border: 1px solid var(--border);
+
+    border-radius: 7px;
+
+    height: 94px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+.stat span {
+
+    font-size: 12px;
+
+    color: #677995;
+
+    font-weight: 700;
+
+}
+
+
+.stat strong {
+
+    font-size: 27px;
+
+    color: var(--blue);
+
+    margin-top: 5px;
+
+}
+
+
+.stat.sent strong {
+
+    color: #08b784;
+
+}
+
+
+.stat.failed strong {
+
+    color: var(--red);
+
+}
+
+
+.stat.remaining strong {
+
+    color: var(--orange);
+
+}
+
+
+/* ========================================
+   PROGRESS BAR
+======================================== */
+
+.bar {
+
+    height: 7px;
+
+    border-radius: 5px;
+
+    background: #e1e7ef;
+
+    overflow: hidden;
+
+    margin: 0 0 18px;
+
+}
+
+
+#barFill {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: #10b981;
+
+    transition:
+        width 0.2s ease;
+
+}
+
+
+/* ========================================
+   STATUS
+======================================== */
+
+.status {
+
+    text-align: center;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin-bottom: 23px;
+
+}
+
+
+/* ========================================
+   SEND BUTTON
+======================================== */
+
+.send-all {
+
+    height: 42px;
+
+    width: 100%;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    background: #09ad7c;
+
+    color: #fff;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+}
+
+
+.send-all:hover {
+
+    background: #079b70;
+
+}
+
+
+.send-all:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+}
+
+
+/* ========================================
+   RESULT
+======================================== */
+
+.result {
+
+    font-size: 12px;
+
+    text-align: center;
+
+    margin-top: 12px;
+
+    color: #64748b;
+
+    line-height: 1.5;
+
+}
+
+
+/* ========================================
+   LOGIN PAGE
+======================================== */
+
+.login-page {
+
+    min-height: 100vh;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 20px;
+
+}
+
+
+.login-card {
+
+    width: min(
+        420px,
+        100%
+    );
+
+    background: #fff;
+
+    border-radius: 14px;
+
+    padding: 34px;
+
+    box-shadow: var(--shadow);
+
+}
+
+
+.login-card .brand {
+
+    font-size: 25px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.muted {
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.login-form label {
+
+    margin-top: 15px;
+
+}
+
+
+.login-form input {
+
+    margin-bottom: 4px;
+
+}
+
+
+/* ========================================
+   PRIMARY BUTTON
+======================================== */
+
+.primary {
+
+    height: 44px;
+
+    background: var(--blue);
+
+    color: #fff;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+}
+
+
+.primary:hover {
+
+    background: #376ee5;
+
+}
+
+
+.full {
+
+    width: 100%;
+
+    margin-top: 22px;
+
+}
+
+
+/* ========================================
+   ALERT
+======================================== */
+
+.alert {
+
+    padding: 10px 12px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.alert.error {
+
+    background: #fff1f1;
+
+    color: #c33;
+
+    border: 1px solid #ffd0d0;
+
+}
+
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 850px) {
+
+    .page {
+
+        padding: 22px 15px;
+
+    }
+
+
+    .grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .compose {
+
+        min-height: auto;
+
+    }
+
+
+    .brand {
+
+        font-size: 24px;
+
+    }
+
+
+    .topbar {
+
+        margin-bottom: 30px;
+
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .form-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .card {
+
+        padding: 20px;
+
+    }
+
+
+    .captcha-demo {
+
+        width: 100%;
+
+    }
+
+}
