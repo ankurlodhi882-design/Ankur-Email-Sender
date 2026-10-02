@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Secure Mail Console - Login</title>
+    <title>Secure Mail Console</title>
 
     <link
         rel="stylesheet"
@@ -19,95 +19,95 @@
 
 </head>
 
+
 <body class="login-page">
 
-    <div class="login-card">
+<div class="login-card">
 
-        <div class="login-brand">
+    <div class="brand">
 
-            <div class="logo">
-                ✦
-            </div>
-
-            <div>
-
-                <h2>
-                    Secure Mail Console
-                </h2>
-
-                <p>
-                    Secure email workspace
-                </p>
-
-            </div>
-
+        <div class="brand-icon">
+            ✉
         </div>
 
+        <div>
 
-        <h1>
-            Welcome Back
-        </h1>
+            <h1>Secure Mail</h1>
 
-        <p class="muted">
-            Sign in to access your email dashboard.
-        </p>
+            <p>Mail Console</p>
 
-
-        {% if error %}
-
-        <div class="error-box">
-            {{ error }}
-        </div>
-
-        {% endif %}
-
-
-        <form
-            method="POST"
-            action="/login"
-        >
-
-            <label>
-                Username
-            </label>
-
-            <input
-                type="text"
-                name="username"
-                placeholder="Enter username"
-                autocomplete="username"
-                required
-            >
-
-
-            <label>
-                Password
-            </label>
-
-            <input
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                autocomplete="current-password"
-                required
-            >
-
-
-            <button
-                type="submit"
-                class="primary-button"
-            >
-                Sign In
-            </button>
-
-        </form>
-
-
-        <div class="footer-text">
-            Secure Mail Console
         </div>
 
     </div>
 
+
+    <div class="login-title">
+
+        <h2>Sign in</h2>
+
+        <p>
+            Enter your console credentials.
+        </p>
+
+    </div>
+
+
+    {% if error %}
+
+    <div class="error-box">
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+
+    <form
+        method="POST"
+        action="{{ url_for('login_post') }}"
+    >
+
+        <label>
+            Username
+        </label>
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            autocomplete="username"
+            required
+        >
+
+
+        <label>
+            Password
+        </label>
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            required
+        >
+
+
+        <button
+            type="submit"
+            class="primary-button"
+        >
+            Sign In
+        </button>
+
+    </form>
+
+
+    <div class="login-footer">
+        Secure Mail Console
+    </div>
+
+</div>
+
 </body>
+
 </html>
