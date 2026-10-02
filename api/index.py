@@ -3,7 +3,7 @@ import re
 import ssl
 import smtplib
 import secrets
-import random
+import time
 
 from functools import wraps
 from email.message import EmailMessage
@@ -27,60 +27,65 @@ app = Flask(
     static_url_path="/static",
 )
 
-# --------------------------------------------------
-# SETTINGS
-# --------------------------------------------------
+# =========================================================
+# CONFIG
+# =========================================================
 
 app.secret_key = os.getenv(
     "FLASK_SECRET_KEY",
-    "change-this-secret-key",
+    "change-this-secret-in-vercel"
 )
 
 LOGIN_USER = os.getenv(
     "LOGIN_USER",
-    "Ankur",
+    "Ankur"
 )
 
 LOGIN_PASSWORD = os.getenv(
     "LOGIN_PASSWORD",
-    "Radhika",
+    "Radhika"
 )
 
 SMTP_HOST = os.getenv(
     "SMTP_HOST",
-    "smtp.gmail.com",
+    "smtp.gmail.com"
 )
 
 SMTP_PORT = int(
     os.getenv(
         "SMTP_PORT",
-        "465",
+        "465"
     )
 )
 
-# Maximum 25 recipients per request
 MAX_RECIPIENTS = 25
 
-EMAIL_RE = re.compile(
+# Small delay between messages.
+# This is not a spam-bypass mechanism; it simply avoids
+# hammering the SMTP connection.
+SEND_DELAY = float(
+    os.getenv(
+        "SEND_DELAY",
+        "1"
+    )
+)
+
+EMAIL_REGEX = re.compile(
     r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
 )
 
 
-# --------------------------------------------------
-# EMAIL VALIDATION
-# --------------------------------------------------
+# =========================================================
+# HELPERS
+# =========================================================
 
 def valid_email(email):
     return bool(
-        EMAIL_RE.fullmatch(
+        EMAIL_REGEX.fullmatch(
             email.strip()
         )
     )
 
-
-# --------------------------------------------------
-# LOGIN PROTECTION
-# --------------------------------------------------
 
 def login_required(func):
 
@@ -88,7 +93,8 @@ def login_required(func):
     def wrapper(*args, **kwargs):
 
         if not session.get(
-            "authenticated"
+            "authenticated",
+            False
         ):
             return redirect(
                 url_for("login")
@@ -102,22 +108,18 @@ def login_required(func):
     return wrapper
 
 
-# --------------------------------------------------
-# RECIPIENT PARSER
-# --------------------------------------------------
-
 def parse_recipients(raw):
 
-    parts = re.split(
+    values = re.split(
         r"[\s,;]+",
-        raw or "",
+        raw or ""
     )
 
-    recipients = []
+    valid = []
     invalid = []
     seen = set()
 
-    for value in parts:
+    for value in values:
 
         email = value.strip()
 
@@ -129,60 +131,18 @@ def parse_recipients(raw):
             key = email.lower()
 
             if key not in seen:
+
                 seen.add(key)
-                recipients.append(email)
+                valid.append(email)
 
         else:
+
             invalid.append(email)
 
-    return recipients, invalid
+    return valid, invalid
 
 
-# --------------------------------------------------
-# SPINTAX
-# Example:
-# {Hi|Hello|Hey}
-# --------------------------------------------------
-
-def expand_spintax(text):
-
-    pattern = re.compile(
-        r"\{([^{}|]+(?:\|[^{}|]+)+)\}"
-    )
-
-    def replace(match):
-
-        options = (
-            match.group(1)
-            .split("|")
-        )
-
-        return random.choice(
-            options
-        )
-
-    for _ in range(10):
-
-        new_text = pattern.sub(
-            replace,
-            text
-        )
-
-        if new_text == text:
-            break
-
-        text = new_text
-
-    return text
-
-
-# --------------------------------------------------
-# NAME FROM EMAIL
-# john.smith@gmail.com
-# -> John Smith
-# --------------------------------------------------
-
-def name_from_email(email):
+def recipient_name(email):
 
     local = email.split(
         "@",
@@ -199,17 +159,27 @@ def name_from_email(email):
     return name.title()
 
 
-# --------------------------------------------------
-# SEND ONE EMAIL
-# --------------------------------------------------
+def personalize(text, email):
 
-def send_one_email(
+    name = recipient_name(email)
+
+    return text.replace(
+        "{name}",
+        name
+    )
+
+
+# =========================================================
+# SEND EMAIL
+# =========================================================
+
+def send_email(
     sender_name,
     sender_email,
     app_password,
     recipient,
     subject,
-    body,
+    body
 ):
 
     message = EmailMessage()
@@ -233,20 +203,18 @@ def send_one_email(
         body.strip()
     )
 
-    context = (
-        ssl.create_default_context()
-    )
+    context = ssl.create_default_context()
 
     with smtplib.SMTP_SSL(
         SMTP_HOST,
         SMTP_PORT,
         context=context,
-        timeout=30,
+        timeout=30
     ) as smtp:
 
         smtp.login(
             sender_email,
-            app_password,
+            app_password
         )
 
         smtp.send_message(
@@ -254,22 +222,9 @@ def send_one_email(
         )
 
 
-# --------------------------------------------------
-# HOME
-# --------------------------------------------------
-
-@app.get("/")
-@login_required
-def index():
-
-    return render_template(
-        "index.html"
-    )
-
-
-# --------------------------------------------------
-# LOGIN PAGE
-# --------------------------------------------------
+# =========================================================
+# LOGIN
+# =========================================================
 
 @app.get("/login")
 def login():
@@ -286,12 +241,8 @@ def login():
     )
 
 
-# --------------------------------------------------
-# LOGIN
-# --------------------------------------------------
-
 @app.post("/login")
-def do_login():
+def login_post():
 
     username = (
         request.form
@@ -307,17 +258,17 @@ def do_login():
         ""
     )
 
-    if (
-        secrets.compare_digest(
-            username,
-            LOGIN_USER,
-        )
-        and
-        secrets.compare_digest(
-            password,
-            LOGIN_PASSWORD,
-        )
-    ):
+    correct_user = secrets.compare_digest(
+        username,
+        LOGIN_USER
+    )
+
+    correct_password = secrets.compare_digest(
+        password,
+        LOGIN_PASSWORD
+    )
+
+    if correct_user and correct_password:
 
         session.clear()
 
@@ -329,13 +280,9 @@ def do_login():
 
     return render_template(
         "login.html",
-        error="Invalid username or password.",
+        error="Invalid username or password."
     ), 401
 
-
-# --------------------------------------------------
-# LOGOUT
-# --------------------------------------------------
 
 @app.post("/logout")
 def logout():
@@ -347,13 +294,26 @@ def logout():
     )
 
 
-# --------------------------------------------------
-# PARSE RECIPIENTS API
-# --------------------------------------------------
+# =========================================================
+# DASHBOARD
+# =========================================================
 
-@app.post("/api/parse-recipients")
+@app.get("/")
 @login_required
-def parse_api():
+def index():
+
+    return render_template(
+        "index.html"
+    )
+
+
+# =========================================================
+# RECIPIENT CHECK
+# =========================================================
+
+@app.post("/api/check")
+@login_required
+def check_recipients():
 
     data = (
         request.get_json(
@@ -362,29 +322,28 @@ def parse_api():
         or {}
     )
 
-    recipients, invalid = (
-        parse_recipients(
-            data.get(
-                "recipients",
-                ""
-            )
+    raw = str(
+        data.get(
+            "recipients",
+            ""
         )
+    )
+
+    recipients, invalid = parse_recipients(
+        raw
     )
 
     return jsonify({
         "ok": True,
-        "count": len(
-            recipients
-        ),
-        "recipients": recipients,
-        "invalid": invalid[:30],
-        "max_recipients": MAX_RECIPIENTS,
+        "count": len(recipients),
+        "invalid": invalid[:50],
+        "maximum": MAX_RECIPIENTS
     })
 
 
-# --------------------------------------------------
-# SEND EMAILS API
-# --------------------------------------------------
+# =========================================================
+# SEND
+# =========================================================
 
 @app.post("/api/send")
 @login_required
@@ -442,67 +401,55 @@ def send_api():
         )
     )
 
-    # ----------------------------------------------
+    # -----------------------------------------------------
     # VALIDATION
-    # ----------------------------------------------
+    # -----------------------------------------------------
 
     if not sender_name:
 
         return jsonify({
             "ok": False,
-            "error": "Sender name is required.",
+            "error": "Sender name is required."
         }), 400
 
-    if not valid_email(
-        sender_email
-    ):
+    if not valid_email(sender_email):
 
         return jsonify({
             "ok": False,
-            "error": "Enter a valid Gmail address.",
+            "error": "Enter a valid Gmail address."
         }), 400
 
     if not app_password:
 
         return jsonify({
             "ok": False,
-            "error": "Gmail App Password is required.",
+            "error": "Gmail App Password is required."
         }), 400
 
     if not subject:
 
         return jsonify({
             "ok": False,
-            "error": "Email subject is required.",
+            "error": "Subject is required."
         }), 400
 
     if not body.strip():
 
         return jsonify({
             "ok": False,
-            "error": "Message body is required.",
+            "error": "Message is required."
         }), 400
 
-    # ----------------------------------------------
-    # RECIPIENTS
-    # ----------------------------------------------
-
-    recipients, invalid = (
-        parse_recipients(
-            raw_recipients
-        )
+    recipients, invalid = parse_recipients(
+        raw_recipients
     )
 
     if not recipients:
 
         return jsonify({
             "ok": False,
-            "error": "No valid recipients found.",
+            "error": "No valid recipients found."
         }), 400
-
-    # ----------------------------------------------
-    # MAXIMUM 25
-    # ----------------------------------------------
 
     if len(recipients) > MAX_RECIPIENTS:
 
@@ -510,90 +457,80 @@ def send_api():
             "ok": False,
             "error": (
                 "Maximum 25 recipients "
-                "are allowed per request."
+                "are allowed."
             ),
-            "count": len(recipients),
+            "count": len(recipients)
         }), 400
 
-    # ----------------------------------------------
-    # SEND
-    # ----------------------------------------------
+    # -----------------------------------------------------
+    # SEND EACH MESSAGE INDIVIDUALLY
+    # -----------------------------------------------------
+
+    total = len(recipients)
 
     sent = 0
+
     failed = []
 
-    for recipient in recipients:
+    for index, recipient in enumerate(
+        recipients
+    ):
 
         try:
 
-            recipient_name = (
-                name_from_email(
-                    recipient
-                )
+            final_subject = personalize(
+                subject,
+                recipient
             )
 
-            final_subject = (
-                expand_spintax(
-                    subject
-                )
-                .replace(
-                    "{name}",
-                    recipient_name
-                )
+            final_body = personalize(
+                body,
+                recipient
             )
 
-            final_body = (
-                expand_spintax(
-                    body
-                )
-                .replace(
-                    "{name}",
-                    recipient_name
-                )
-            )
-
-            send_one_email(
+            send_email(
                 sender_name,
                 sender_email,
                 app_password,
                 recipient,
                 final_subject,
-                final_body,
+                final_body
             )
 
             sent += 1
 
-        except Exception as error:
+        except Exception as exc:
 
             failed.append({
                 "email": recipient,
-                "error": str(
-                    error
-                )[:250],
+                "error": str(exc)[:300]
             })
 
-    # ----------------------------------------------
-    # RESPONSE
-    # ----------------------------------------------
+        # Small delay between messages.
+        if index < total - 1:
+
+            time.sleep(
+                SEND_DELAY
+            )
+
+    # -----------------------------------------------------
+    # RESULT
+    # -----------------------------------------------------
 
     return jsonify({
         "ok": True,
-        "total": len(
-            recipients
-        ),
+        "total": total,
         "sent": sent,
-        "failed": len(
-            failed
-        ),
+        "failed": len(failed),
         "remaining": 0,
-        "invalid": invalid[:30],
-        "failures": failed,
+        "invalid": invalid[:50],
+        "failures": failed
     })
 
 
-# --------------------------------------------------
-# LOCAL RUN
-# --------------------------------------------------
+# =========================================================
+# LOCAL SERVER
+# =========================================================
 
 if __name__ == "__main__":
 
@@ -605,5 +542,5 @@ if __name__ == "__main__":
                 "5000"
             )
         ),
-        debug=False,
+        debug=False
     )
