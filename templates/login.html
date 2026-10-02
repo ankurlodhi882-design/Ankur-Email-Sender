@@ -2,119 +2,105 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<meta charset="UTF-8">
+    <title>Secure Mail Console</title>
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>Secure Mail Console</title>
-
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}"
->
-
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
-
 
 <body class="login-page">
 
+    <div class="login-card">
 
-<div class="login-card">
+        <div class="login-brand">
 
+            <div class="logo-mark">✦</div>
 
-    <div class="login-brand">
+            <div>
+                <div class="logo-title">
+                    Secure Mail Console
+                </div>
 
-        <div class="logo-mark">
-            ✦
-        </div>
-
-        <div>
-
-            <div class="logo-title">
-                Secure Mail Console
-            </div>
-
-            <div class="logo-subtitle">
-                Secure email workspace
+                <div class="logo-subtitle">
+                    Secure email workspace
+                </div>
             </div>
 
         </div>
 
-    </div>
+
+        <h1>Welcome Back</h1>
+
+        <p class="login-description">
+            Sign in to access your email dashboard.
+        </p>
 
 
-    <h1>
-        Welcome Back
-    </h1>
+        {% if error %}
 
-    <p class="login-description">
-        Sign in to access your email dashboard.
-    </p>
+        <div class="error-box">
+            {{ error }}
+        </div>
 
-
-    {% if error %}
-
-    <div class="error-box">
-        {{ error }}
-    </div>
-
-    {% endif %}
+        {% endif %}
 
 
-    <form
-        method="POST"
-        action="/login"
-    >
-
-        <label for="username">
-            Username
-        </label>
-
-        <input
-            id="username"
-            name="username"
-            type="text"
-            placeholder="Enter username"
-            autocomplete="username"
-            required
+        <form
+            method="POST"
+            action="/login"
         >
 
+            <label for="username">
+                Username
+            </label>
 
-        <label for="password">
-            Password
-        </label>
-
-        <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Enter password"
-            autocomplete="current-password"
-            required
-        >
-
-
-        <button
-            class="login-button"
-            type="submit"
-        >
-            Sign In
-        </button>
-
-    </form>
+            <input
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Enter username"
+                autocomplete="username"
+                required
+            >
 
 
-    <div class="login-footer">
-        Secure Mail Console
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter password"
+                autocomplete="current-password"
+                required
+            >
+
+
+            <button
+                class="login-button"
+                type="submit"
+            >
+                Sign In
+            </button>
+
+        </form>
+
+
+        <div class="login-footer">
+            Secure Mail Console
+        </div>
+
     </div>
-
-
-</div>
-
 
 </body>
 </html>
