@@ -1,915 +1,442 @@
 :root {
-
     --bg: #f5f8fc;
-
     --card: #ffffff;
-
     --text: #10213d;
-
     --muted: #71809a;
-
     --border: #dce4ef;
-
     --blue: #467df5;
-
     --green: #10b981;
-
     --red: #ef4444;
-
     --orange: #f59e0b;
-
-    --shadow:
-        0 4px 13px
-        rgba(24, 42, 72, 0.10);
-
+    --shadow: 0 4px 13px rgba(24, 42, 72, .10);
 }
-
 
 * {
-
     box-sizing: border-box;
-
 }
 
-
 body {
-
     margin: 0;
-
     background: var(--bg);
-
+    color: var(--text);
     font-family:
         Inter,
         Arial,
         Helvetica,
         sans-serif;
-
-    color: var(--text);
-
 }
 
-
-/* =====================================
-   PAGE
-===================================== */
+button,
+input,
+textarea {
+    font: inherit;
+}
 
 .page {
-
-    width: 100%;
-
-    max-width: 1110px;
-
+    width: min(1450px, 94%);
     margin: 0 auto;
-
-    padding: 30px 15px;
-
+    padding-bottom: 40px;
 }
-
-
-/* =====================================
-   HEADER
-===================================== */
 
 .topbar {
-
+    height: 76px;
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
-    margin-bottom: 42px;
-
+    border-bottom: 1px solid var(--border);
 }
-
 
 .brand {
-
     display: flex;
-
     align-items: center;
-
-    gap: 10px;
-
-    font-size: 30px;
-
+    gap: 12px;
     font-weight: 800;
-
-    color: #566ff1;
-
-    letter-spacing: -1px;
-
+    font-size: 18px;
 }
-
 
 .brand-shield,
 .brand-icon {
-
-    font-size: 34px;
-
-    color: #3f7df5;
-
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: linear-gradient(
+        135deg,
+        #467df5,
+        #315ed5
+    );
+    font-size: 22px;
 }
-
-
-/* =====================================
-   LOGOUT
-===================================== */
 
 .logout {
-
-    background: #ffffff;
-
-    border: 1px solid #ffb9b9;
-
-    color: #ff4c4c;
-
+    border: 1px solid var(--border);
+    background: white;
+    color: #30415d;
     border-radius: 8px;
-
-    padding: 8px 14px;
-
-    font-weight: 700;
-
+    padding: 9px 15px;
     cursor: pointer;
-
 }
-
-
-.logout:hover {
-
-    background: #fff5f5;
-
-}
-
-
-/* =====================================
-   TITLE
-===================================== */
 
 .page-title {
-
-    font-size: 21px;
-
-    margin: 0 0 28px;
-
-    font-weight: 800;
-
+    margin: 30px 0 22px;
+    font-size: 28px;
 }
-
-
-/* =====================================
-   GRID
-===================================== */
 
 .grid {
-
     display: grid;
-
     grid-template-columns:
-        1fr 1fr;
-
-    gap: 20px;
-
+        minmax(0, 1.15fr)
+        minmax(380px, .85fr);
+    gap: 22px;
+    align-items: start;
 }
-
-
-/* =====================================
-   CARD
-===================================== */
 
 .card {
-
     background: var(--card);
-
-    border-radius: 13px;
-
+    border: 1px solid var(--border);
+    border-radius: 12px;
     box-shadow: var(--shadow);
-
-    padding: 30px;
-
+    padding: 24px;
 }
 
-
-.compose {
-
-    min-height: 690px;
-
-}
-
-
-h2 {
-
+.card h2 {
+    margin: 0 0 22px;
     font-size: 18px;
-
-    margin: 0 0 12px;
-
-    font-weight: 800;
-
 }
-
-
-/* =====================================
-   LABEL
-===================================== */
-
-label {
-
-    display: block;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-    margin-bottom: 9px;
-
-}
-
-
-/* =====================================
-   FORM GRID
-===================================== */
 
 .form-grid {
-
     display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 22px 16px;
-
-    margin-bottom: 22px;
-
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
 }
 
-
-/* =====================================
-   INPUT / TEXTAREA
-===================================== */
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
 
 input,
 textarea {
-
     width: 100%;
-
     border: 1px solid var(--border);
-
-    border-radius: 7px;
-
-    background: #ffffff;
-
+    background: #fff;
     color: var(--text);
-
-    font: inherit;
-
+    border-radius: 8px;
+    padding: 12px 13px;
     outline: none;
-
+    transition: .2s;
 }
-
-
-input {
-
-    height: 43px;
-
-    padding: 0 14px;
-
-}
-
-
-textarea {
-
-    padding: 14px;
-
-    resize: vertical;
-
-}
-
 
 input:focus,
 textarea:focus {
-
-    border-color: #89a9f9;
-
+    border-color: var(--blue);
     box-shadow:
         0 0 0 3px
-        rgba(70, 125, 245, 0.09);
-
+        rgba(70, 125, 245, .10);
 }
-
-
-/* =====================================
-   MESSAGE
-===================================== */
 
 .message {
-
-    height: 275px;
-
-    margin-bottom: 25px;
-
+    min-height: 250px;
+    resize: vertical;
+    margin-top: 2px;
 }
-
-
-/* =====================================
-   PASSWORD
-===================================== */
 
 .password-wrap {
-
     position: relative;
-
 }
-
 
 .password-wrap input {
-
     padding-right: 45px;
-
 }
-
 
 .eye {
-
     position: absolute;
-
-    right: 8px;
-
-    top: 7px;
-
-    height: 29px;
-
+    right: 7px;
+    top: 6px;
+    width: 35px;
+    height: 35px;
     border: 0;
-
     background: transparent;
-
-    color: #71809a;
-
     cursor: pointer;
-
+    color: var(--muted);
 }
-
-
-/* =====================================
-   SPAM
-===================================== */
 
 .spam-title {
-
-    font-size: 13px;
-
-    font-weight: 800;
-
+    margin-top: 20px;
     margin-bottom: 10px;
-
+    font-size: 13px;
+    font-weight: 700;
 }
-
 
 .captcha-demo {
-
-    width: 282px;
-
-    min-height: 60px;
-
-    border: 1px solid #d8d8d8;
-
-    background: #fafafa;
-
+    border: 1px solid var(--border);
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 13px;
     display: flex;
-
     align-items: center;
-
-    gap: 9px;
-
-    padding: 8px;
-
+    gap: 10px;
     font-size: 13px;
-
 }
-
 
 .captcha-demo .check {
-
-    width: 28px;
-
-    height: 28px;
-
-    border-radius: 50%;
-
-    background: #21a65a;
-
+    width: 23px;
+    height: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background: #10b981;
     color: white;
-
-    display: grid;
-
-    place-items: center;
-
-    font-size: 18px;
-
+    font-weight: 800;
 }
-
 
 .captcha-demo small {
-
-    margin-left: auto;
-
-    max-width: 90px;
-
-    font-size: 9px;
-
-    color: #777;
-
+    color: var(--muted);
 }
-
-
-/* =====================================
-   RIGHT
-===================================== */
 
 .right-col {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 22px;
-
 }
-
-
-/* =====================================
-   RECIPIENTS
-===================================== */
-
-.recipients {
-
-    min-height: 249px;
-
-}
-
 
 .section-head {
-
     display: flex;
-
+    align-items: center;
     justify-content: space-between;
-
-    align-items: flex-start;
-
+    gap: 20px;
 }
 
+.section-head h2 {
+    margin-bottom: 5px;
+}
 
 .section-head p {
-
-    margin: 0 0 10px;
-
+    margin: 0;
     color: var(--muted);
-
     font-size: 12px;
-
 }
-
 
 .badge {
-
-    background: #eef5ff;
-
-    color: #4281f5;
-
-    border-radius: 14px;
-
-    padding: 5px 9px;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
+    background: #eef4ff;
+    color: #3566d5;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
 }
-
 
 .recipient-box {
-
-    height: 142px;
-
+    min-height: 185px;
+    resize: vertical;
+    margin-top: 18px;
 }
-
 
 .invalid {
-
-    color: #d94c4c;
-
-    font-size: 11px;
-
-    margin-top: 7px;
-
-    min-height: 14px;
-
+    margin-top: 10px;
+    color: var(--red);
+    font-size: 12px;
+    line-height: 1.5;
 }
-
-
-/* =====================================
-   PROGRESS
-===================================== */
-
-.progress-card {
-
-    min-height: 423px;
-
-}
-
 
 .stats {
-
     display: grid;
-
     grid-template-columns:
-        1fr 1fr;
-
-    gap: 15px;
-
-    margin:
-        5px 0 22px;
-
+        repeat(4, 1fr);
+    gap: 10px;
 }
-
 
 .stat {
-
-    height: 94px;
-
+    background: #f6f8fc;
     border: 1px solid var(--border);
-
-    border-radius: 7px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
+    border-radius: 9px;
+    padding: 14px;
 }
-
 
 .stat span {
-
-    font-size: 12px;
-
-    color: #677995;
-
-    font-weight: 700;
-
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 800;
+    margin-bottom: 8px;
 }
-
 
 .stat strong {
-
-    font-size: 27px;
-
-    color: var(--blue);
-
-    margin-top: 5px;
-
+    font-size: 22px;
 }
-
 
 .stat.sent strong {
-
-    color: #08b784;
-
+    color: var(--green);
 }
-
 
 .stat.failed strong {
-
     color: var(--red);
-
 }
-
 
 .stat.remaining strong {
-
     color: var(--orange);
-
 }
-
-
-/* =====================================
-   BAR
-===================================== */
 
 .bar {
-
-    height: 7px;
-
-    border-radius: 5px;
-
-    background: #e1e7ef;
-
+    height: 9px;
+    background: #e8edf5;
+    border-radius: 999px;
     overflow: hidden;
-
-    margin-bottom: 18px;
-
+    margin-top: 20px;
 }
-
 
 #barFill {
-
+    width: 0;
     height: 100%;
-
-    width: 0%;
-
-    background: #10b981;
-
-    transition:
-        width 0.2s ease;
-
+    background: var(--green);
+    transition: width .3s ease;
 }
-
-
-/* =====================================
-   STATUS
-===================================== */
 
 .status {
-
-    text-align: center;
-
+    color: var(--muted);
     font-size: 13px;
-
-    font-weight: 700;
-
-    margin-bottom: 23px;
-
+    margin: 13px 0;
 }
-
-
-/* =====================================
-   SEND BUTTON
-===================================== */
 
 .send-all {
-
-    height: 42px;
-
     width: 100%;
-
     border: 0;
-
-    border-radius: 7px;
-
-    background: #09ad7c;
-
+    border-radius: 8px;
+    background: var(--green);
     color: white;
-
-    font-size: 15px;
-
     font-weight: 800;
-
+    padding: 14px;
     cursor: pointer;
-
+    transition: .2s;
 }
-
 
 .send-all:hover {
-
-    background: #079b70;
-
+    filter: brightness(.95);
 }
-
 
 .send-all:disabled {
-
-    opacity: 0.65;
-
+    opacity: .65;
     cursor: not-allowed;
-
 }
-
-
-/* =====================================
-   RESULT
-===================================== */
 
 .result {
-
-    font-size: 12px;
-
-    text-align: center;
-
-    margin-top: 12px;
-
-    color: #64748b;
-
-    line-height: 1.5;
-
+    margin-top: 15px;
+    color: #40516c;
+    font-size: 13px;
+    line-height: 1.6;
+    word-break: break-word;
 }
-
-
-/* =====================================
-   LOGIN
-===================================== */
 
 .login-page {
-
     min-height: 100vh;
-
-    display: grid;
-
-    place-items: center;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 20px;
-
 }
-
 
 .login-card {
-
-    width: min(
-        420px,
-        100%
-    );
-
+    width: min(430px, 100%);
     background: white;
-
+    border: 1px solid var(--border);
     border-radius: 14px;
-
-    padding: 34px;
-
     box-shadow: var(--shadow);
-
+    padding: 32px;
 }
-
 
 .login-card .brand {
-
-    font-size: 25px;
-
-    margin-bottom: 10px;
-
+    margin-bottom: 12px;
 }
-
 
 .muted {
-
     color: var(--muted);
-
     font-size: 14px;
-
-    margin-bottom: 25px;
-
+    margin-bottom: 22px;
 }
-
 
 .login-form label {
-
-    margin-top: 15px;
-
+    margin-top: 16px;
 }
-
 
 .login-form input {
-
-    margin-bottom: 4px;
-
+    margin-bottom: 2px;
 }
-
-
-/* =====================================
-   BUTTON
-===================================== */
 
 .primary {
-
-    height: 44px;
-
-    background: var(--blue);
-
-    color: white;
-
+    margin-top: 22px;
     border: 0;
-
-    border-radius: 7px;
-
-    font-weight: 800;
-
+    background: var(--blue);
+    color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
     cursor: pointer;
-
+    font-weight: 700;
 }
-
-
-.primary:hover {
-
-    background: #376ee5;
-
-}
-
 
 .full {
-
     width: 100%;
-
-    margin-top: 22px;
-
 }
-
-
-/* =====================================
-   ERROR
-===================================== */
 
 .alert {
-
-    padding: 10px 12px;
-
-    border-radius: 7px;
-
+    border-radius: 8px;
+    padding: 11px 13px;
     font-size: 13px;
-
-    margin-bottom: 10px;
-
 }
-
 
 .alert.error {
-
-    background: #fff1f1;
-
-    color: #c33;
-
-    border: 1px solid #ffd0d0;
-
+    color: #991b1b;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
 }
-
-
-/* =====================================
-   RESPONSIVE
-===================================== */
 
 @media (max-width: 850px) {
 
-
-    .page {
-
-        padding:
-            22px 15px;
-
-    }
-
-
     .grid {
-
-        grid-template-columns:
-            1fr;
-
+        grid-template-columns: 1fr;
     }
 
-
-    .compose {
-
-        min-height: auto;
-
-    }
-
-
-    .brand {
-
-        font-size: 24px;
-
-    }
-
-
-    .topbar {
-
-        margin-bottom: 30px;
-
+    .right-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
 
 }
 
+@media (max-width: 600px) {
 
-@media (max-width: 520px) {
-
+    .page {
+        width: 94%;
+    }
 
     .form-grid {
-
-        grid-template-columns:
-            1fr;
-
+        grid-template-columns: 1fr;
     }
 
+    .right-col {
+        display: flex;
+    }
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .topbar {
+        height: 68px;
+    }
+
+    .page-title {
+        font-size: 23px;
+    }
 
     .card {
-
-        padding: 20px;
-
-    }
-
-
-    .captcha-demo {
-
-        width: 100%;
-
+        padding: 18px;
     }
 
 }
