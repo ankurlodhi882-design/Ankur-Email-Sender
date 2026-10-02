@@ -31,19 +31,19 @@
 
         <div class="brand">
 
-            <div class="logo-mark">
+            <div class="logo">
                 ✦
             </div>
 
             <div>
 
-                <div class="logo-title">
+                <h2>
                     Secure Mail Console
-                </div>
+                </h2>
 
-                <div class="logo-subtitle">
+                <p>
                     Bulk email workspace
-                </div>
+                </p>
 
             </div>
 
@@ -56,7 +56,7 @@
         >
 
             <button
-                class="logout-button"
+                class="logout"
                 type="submit"
             >
                 Logout
@@ -70,7 +70,7 @@
 
     <!-- TITLE -->
 
-    <div class="page-title-row">
+    <div class="heading">
 
         <div>
 
@@ -79,13 +79,13 @@
             </h1>
 
             <p>
-                Send up to 25 emails per request.
+                Send up to 25 individual emails per request.
             </p>
 
         </div>
 
 
-        <div class="connection-status">
+        <div class="ready">
 
             <span></span>
 
@@ -97,21 +97,21 @@
 
 
 
-    <main class="dashboard">
+    <main class="layout">
 
 
         <!-- LEFT -->
 
-        <section>
+        <div>
 
 
             <!-- SENDER -->
 
-            <div class="card">
+            <section class="card">
 
-                <div class="section-title">
+                <div class="card-title">
 
-                    <div class="section-icon">
+                    <div class="number">
                         01
                     </div>
 
@@ -120,12 +120,12 @@
                 </div>
 
 
-                <div class="form-grid">
+                <div class="grid">
 
 
                     <div class="field">
 
-                        <label for="sender_name">
+                        <label>
                             Sender Name
                         </label>
 
@@ -140,7 +140,7 @@
 
                     <div class="field">
 
-                        <label for="sender_email">
+                        <label>
                             Gmail Address
                         </label>
 
@@ -155,17 +155,16 @@
 
                     <div class="field full">
 
-                        <label for="app_password">
+                        <label>
                             Gmail App Password
                         </label>
 
-
-                        <div class="password-wrapper">
+                        <div class="password-box">
 
                             <input
                                 id="app_password"
                                 type="password"
-                                placeholder="16-character Gmail App Password"
+                                placeholder="16-character App Password"
                             >
 
                             <button
@@ -181,17 +180,17 @@
 
                 </div>
 
-            </div>
+            </section>
 
 
 
             <!-- MESSAGE -->
 
-            <div class="card">
+            <section class="card">
 
-                <div class="section-title">
+                <div class="card-title">
 
-                    <div class="section-icon">
+                    <div class="number">
                         02
                     </div>
 
@@ -202,14 +201,14 @@
 
                 <div class="field">
 
-                    <label for="subject">
+                    <label>
                         Subject
                     </label>
 
                     <input
                         id="subject"
                         type="text"
-                        placeholder="Enter email subject"
+                        placeholder="Enter subject"
                     >
 
                 </div>
@@ -217,49 +216,44 @@
 
                 <div class="field">
 
-                    <label for="body">
+                    <label>
                         Message
                     </label>
 
                     <textarea
                         id="body"
-                        rows="10"
-                        placeholder="Write your email here..."
+                        rows="11"
+                        placeholder="Write your message..."
                     ></textarea>
 
                 </div>
 
 
-                <div class="personalization">
+                <div class="hint">
 
-                    <strong>
-                        Personalization:
-                    </strong>
-
-                    Use
-                    <code>{name}</code>
-                    to insert the recipient's name.
+                    <b>{name}</b>
+                    inserts the recipient's local-part name.
 
                     <br>
 
-                    You can also use:
-                    <code>{Hi|Hello|Hey}</code>
+                    Example:
+                    john.smith@gmail.com → John Smith
 
                 </div>
 
-            </div>
+            </section>
 
 
 
             <!-- RECIPIENTS -->
 
-            <div class="card">
+            <section class="card">
 
-                <div class="recipient-title">
+                <div class="recipient-header">
 
-                    <div class="section-title">
+                    <div class="card-title">
 
-                        <div class="section-icon">
+                        <div class="number">
                             03
                         </div>
 
@@ -268,25 +262,25 @@
                     </div>
 
 
-                    <span
-                        id="recipientBadge"
-                        class="badge"
+                    <div
+                        id="recipientCount"
+                        class="count"
                     >
                         0 / 25
-                    </span>
+                    </div>
 
                 </div>
 
 
                 <div class="field">
 
-                    <label for="recipients">
+                    <label>
                         Email Addresses
                     </label>
 
                     <textarea
                         id="recipients"
-                        rows="9"
+                        rows="10"
                         placeholder="Enter up to 25 email addresses..."
                     ></textarea>
 
@@ -294,82 +288,53 @@
 
 
                 <div
-                    id="invalidBox"
+                    id="invalid"
                     class="invalid"
-                    style="display:none;"
+                    hidden
                 ></div>
 
-            </div>
+            </section>
 
-        </section>
+        </div>
 
 
 
         <!-- RIGHT -->
 
-        <aside class="right-side">
+        <aside>
 
 
-            <div class="card stats-card">
+            <section class="card">
 
-                <div class="section-title">
-
+                <div class="card-title">
                     Sending Status
-
                 </div>
 
 
                 <div class="stats">
 
-                    <div class="stat">
 
-                        <span>
-                            Total
-                        </span>
-
-                        <strong id="total">
-                            0
-                        </strong>
-
+                    <div>
+                        <span>Total</span>
+                        <strong id="total">0</strong>
                     </div>
 
 
-                    <div class="stat">
-
-                        <span>
-                            Sent
-                        </span>
-
-                        <strong id="sent">
-                            0
-                        </strong>
-
+                    <div>
+                        <span>Sent</span>
+                        <strong id="sent">0</strong>
                     </div>
 
 
-                    <div class="stat">
-
-                        <span>
-                            Failed
-                        </span>
-
-                        <strong id="failed">
-                            0
-                        </strong>
-
+                    <div>
+                        <span>Failed</span>
+                        <strong id="failed">0</strong>
                     </div>
 
 
-                    <div class="stat">
-
-                        <span>
-                            Remaining
-                        </span>
-
-                        <strong id="remaining">
-                            0
-                        </strong>
-
+                    <div>
+                        <span>Remaining</span>
+                        <strong id="remaining">0</strong>
                     </div>
 
                 </div>
@@ -378,64 +343,64 @@
                 <div class="progress">
 
                     <div
-                        id="progressBar"
-                        class="progress-bar"
-                        style="width:0%;"
+                        id="progress"
+                        class="progress-inner"
                     ></div>
 
                 </div>
 
 
-                <div
+                <p
                     id="status"
                     class="status"
                 >
                     Ready to send
-                </div>
+                </p>
 
 
                 <button
-                    id="sendBtn"
+                    id="sendButton"
                     class="send-button"
                     type="button"
-                    onclick="sendAll()"
+                    onclick="sendEmails()"
                 >
                     ➤ Send All Emails
                 </button>
 
-            </div>
+            </section>
 
 
 
-            <div
+            <section
                 id="result"
                 class="card result"
-                style="display:none;"
-            ></div>
+                hidden
+            ></section>
 
 
-            <div class="card information">
 
-                <strong>
+            <section class="card info">
+
+                <h3>
                     Important
-                </strong>
+                </h3>
 
                 <p>
-                    Use a Gmail App Password instead of your
-                    normal Gmail password.
+                    Use a Gmail App Password,
+                    not your normal Gmail password.
                 </p>
 
                 <p>
-                    Maximum 25 valid recipients are allowed
-                    in one request.
+                    Maximum 25 valid recipients
+                    per request.
                 </p>
 
                 <p>
-                    Replies will automatically go to the
-                    sender Gmail address.
+                    Each recipient receives an
+                    individual email.
                 </p>
 
-            </div>
+            </section>
 
         </aside>
 
@@ -447,91 +412,120 @@
 
 <script>
 
-const recipientsBox =
-    document.getElementById("recipients");
-
-const recipientBadge =
-    document.getElementById("recipientBadge");
-
-const invalidBox =
-    document.getElementById("invalidBox");
+const recipients =
+    document.getElementById(
+        "recipients"
+    );
 
 
-recipientsBox.addEventListener(
-    "input",
-    updateRecipients
-);
+const count =
+    document.getElementById(
+        "recipientCount"
+    );
 
 
-async function updateRecipients() {
-
-    const raw =
-        recipientsBox.value.trim();
-
-    if (!raw) {
-
-        recipientBadge.textContent =
-            "0 / 25";
-
-        invalidBox.style.display =
-            "none";
-
-        return;
-    }
+const invalid =
+    document.getElementById(
+        "invalid"
+    );
 
 
-    try {
-
-        const response =
-            await fetch(
-                "/api/parse-recipients",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        recipients: raw
-                    })
-                }
-            );
+const emailPattern =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
-        const data =
-            await response.json();
+
+function getRecipients() {
+
+    const parts =
+        recipients.value
+        .split(/[\s,;]+/)
+        .map(
+            x => x.trim()
+        )
+        .filter(Boolean);
 
 
-        recipientBadge.textContent =
-            `${data.count} / 25`;
+    const valid = [];
+    const bad = [];
+    const seen = new Set();
 
+
+    for (
+        const email of parts
+    ) {
 
         if (
-            data.invalid &&
-            data.invalid.length
+            emailPattern.test(email)
         ) {
 
-            invalidBox.style.display =
-                "block";
+            const key =
+                email.toLowerCase();
 
-            invalidBox.textContent =
-                "Invalid: " +
-                data.invalid.join(", ");
+
+            if (
+                !seen.has(key)
+            ) {
+
+                seen.add(key);
+
+                valid.push(
+                    email
+                );
+            }
 
         } else {
 
-            invalidBox.style.display =
-                "none";
+            bad.push(email);
         }
+    }
 
-    } catch (error) {
 
-        console.error(error);
+    return {
+        valid,
+        bad
+    };
+}
 
+
+
+function updateCount() {
+
+    const data =
+        getRecipients();
+
+
+    count.textContent =
+        `${data.valid.length} / 25`;
+
+
+    if (
+        data.bad.length
+    ) {
+
+        invalid.hidden =
+            false;
+
+        invalid.textContent =
+            "Invalid: " +
+            data.bad.join(", ");
+
+    } else {
+
+        invalid.hidden =
+            true;
+
+        invalid.textContent =
+            "";
     }
 }
+
+
+
+recipients.addEventListener(
+    "input",
+    updateCount
+);
 
 
 
@@ -542,31 +536,30 @@ function togglePassword() {
             "app_password"
         );
 
-    const button =
-        event.target;
-
 
     if (
         input.type === "password"
     ) {
 
-        input.type = "text";
+        input.type =
+            "text";
 
-        button.textContent =
+        event.target.textContent =
             "Hide";
 
     } else {
 
-        input.type = "password";
+        input.type =
+            "password";
 
-        button.textContent =
+        event.target.textContent =
             "Show";
     }
 }
 
 
 
-function setStats(
+function updateStats(
     total,
     sent,
     failed,
@@ -575,56 +568,47 @@ function setStats(
 
     document.getElementById(
         "total"
-    ).textContent = total;
+    ).textContent =
+        total;
+
 
     document.getElementById(
         "sent"
-    ).textContent = sent;
+    ).textContent =
+        sent;
+
 
     document.getElementById(
         "failed"
-    ).textContent = failed;
+    ).textContent =
+        failed;
+
 
     document.getElementById(
         "remaining"
-    ).textContent = remaining;
+    ).textContent =
+        remaining;
 
 
-    const done =
+    const completed =
         sent + failed;
 
 
-    const percent =
-        total > 0
-            ? (done / total) * 100
+    const percentage =
+        total
+            ? (completed / total) * 100
             : 0;
 
 
     document.getElementById(
-        "progressBar"
+        "progress"
     ).style.width =
-        percent + "%";
+        percentage + "%";
 }
 
 
 
-async function sendAll() {
-
-    const button =
-        document.getElementById(
-            "sendBtn"
-        );
-
-    const status =
-        document.getElementById(
-            "status"
-        );
-
-    const result =
-        document.getElementById(
-            "result"
-        );
-
+async function sendEmails() {
 
     const senderName =
         document.getElementById(
@@ -656,24 +640,24 @@ async function sendAll() {
         ).value;
 
 
-    const recipients =
-        recipientsBox.value;
+    const data =
+        getRecipients();
 
 
     if (!senderName) {
-
         alert(
             "Enter sender name."
         );
-
         return;
     }
 
 
-    if (!senderEmail) {
+    if (!emailPattern.test(
+        senderEmail
+    )) {
 
         alert(
-            "Enter Gmail address."
+            "Enter a valid Gmail address."
         );
 
         return;
@@ -710,48 +694,10 @@ async function sendAll() {
     }
 
 
-    if (!recipients.trim()) {
+    if (!data.valid.length) {
 
         alert(
-            "Enter recipients."
-        );
-
-        return;
-    }
-
-
-    // Check recipient count first
-
-    const parseResponse =
-        await fetch(
-            "/api/parse-recipients",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body: JSON.stringify({
-                    recipients:
-                        recipients
-                })
-            }
-        );
-
-
-    const parsed =
-        await parseResponse.json();
-
-
-    if (
-        !parsed.ok ||
-        parsed.count === 0
-    ) {
-
-        alert(
-            "No valid recipients found."
+            "Enter at least one valid recipient."
         );
 
         return;
@@ -759,7 +705,7 @@ async function sendAll() {
 
 
     if (
-        parsed.count > 25
+        data.valid.length > 25
     ) {
 
         alert(
@@ -772,7 +718,7 @@ async function sendAll() {
 
     const confirmed =
         confirm(
-            `Send email to ${parsed.count} recipient(s)?`
+            `Send ${data.valid.length} email(s)?`
         );
 
 
@@ -781,7 +727,26 @@ async function sendAll() {
     }
 
 
-    button.disabled = true;
+    const button =
+        document.getElementById(
+            "sendButton"
+        );
+
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    const result =
+        document.getElementById(
+            "result"
+        );
+
+
+    button.disabled =
+        true;
 
     button.textContent =
         "Sending...";
@@ -791,15 +756,15 @@ async function sendAll() {
         "Sending emails...";
 
 
-    result.style.display =
-        "none";
+    result.hidden =
+        true;
 
 
-    setStats(
-        parsed.count,
+    updateStats(
+        data.valid.length,
         0,
         0,
-        parsed.count
+        data.valid.length
     );
 
 
@@ -834,108 +799,119 @@ async function sendAll() {
                             body,
 
                         recipients:
-                            recipients
+                            data.valid.join("\n")
                     })
                 }
             );
 
 
-        const data =
+        const responseData =
             await response.json();
 
 
         if (!response.ok) {
 
             throw new Error(
-                data.error ||
+                responseData.error ||
                 "Sending failed."
             );
         }
 
 
-        setStats(
-            data.total,
-            data.sent,
-            data.failed,
-            data.remaining
+        updateStats(
+            responseData.total,
+            responseData.sent,
+            responseData.failed,
+            responseData.remaining
         );
 
 
         status.textContent =
-            `Completed: ${data.sent} sent, ${data.failed} failed.`;
+            `Completed — ${responseData.sent} sent, ${responseData.failed} failed.`;
 
 
-        result.style.display =
-            "block";
+        result.hidden =
+            false;
 
 
         if (
-            data.failed === 0
+            responseData.failed === 0
         ) {
 
             result.className =
-                "card result success-result";
+                "card result success";
 
             result.innerHTML =
-                `<strong>Sending completed.</strong>
-                 <p>${data.sent} email(s) sent successfully.</p>`;
+                `
+                <h3>Sending completed</h3>
+                <p>
+                    ${responseData.sent}
+                    email(s) were accepted by SMTP.
+                </p>
+                `;
 
         } else {
 
             result.className =
-                "card result failed-result";
+                "card result failure";
 
 
             let html =
-                `<strong>Sending completed.</strong>
-                 <p>${data.sent} sent, ${data.failed} failed.</p>`;
+                `
+                <h3>Sending completed</h3>
+
+                <p>
+                    ${responseData.sent} sent,
+                    ${responseData.failed} failed.
+                </p>
+
+                <div class="failure-list">
+                `;
 
 
-            if (
-                data.failures &&
-                data.failures.length
+            for (
+                const item
+                of responseData.failures
             ) {
 
                 html +=
-                    "<div class='failure-list'>";
-
-                data.failures.forEach(
-                    item => {
-
-                        html +=
-                            `<div>
-                                <strong>${escapeHtml(item.email)}</strong>
-                                <br>
-                                ${escapeHtml(item.error)}
-                             </div>`;
-
-                    }
-                );
-
-                html +=
-                    "</div>";
+                    `
+                    <div>
+                        <b>${escapeHTML(item.email)}</b>
+                        <br>
+                        ${escapeHTML(item.error)}
+                    </div>
+                    `;
             }
+
+
+            html +=
+                "</div>";
 
 
             result.innerHTML =
                 html;
         }
 
-
     } catch (error) {
 
         status.textContent =
-            "Sending failed.";
+            "Sending failed";
 
-        result.style.display =
-            "block";
+
+        result.hidden =
+            false;
+
 
         result.className =
-            "card result failed-result";
+            "card result failure";
+
 
         result.innerHTML =
-            `<strong>Error</strong>
-             <p>${escapeHtml(error.message)}</p>`;
+            `
+            <h3>Error</h3>
+            <p>${escapeHTML(error.message)}</p>
+            `;
 
     } finally {
 
@@ -949,7 +925,7 @@ async function sendAll() {
 
 
 
-function escapeHtml(value) {
+function escapeHTML(value) {
 
     return String(value)
         .replace(
