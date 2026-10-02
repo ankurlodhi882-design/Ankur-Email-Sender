@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,50 +10,63 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Secure Mail Console</title>
+    <title>
+        Secure Mail Console
+    </title>
+
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}"
     >
 
+
     {% if turnstile_site_key %}
+
     <script
         src="https://challenges.cloudflare.com/turnstile/v0/api.js"
         async
         defer
     ></script>
+
     {% endif %}
+
 </head>
 
 
 <body>
 
+
 <div class="page">
 
-    <!-- =========================
-         TOP HEADER
-    ========================== -->
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
 
     <header class="topbar">
 
+
         <div class="brand">
+
 
             <div class="brand-shield">
                 ♢
             </div>
 
+
             <div>
                 Secure Mail Console
             </div>
 
+
         </div>
+
 
 
         <form
             method="POST"
             action="/logout"
-            id="logoutForm"
         >
 
             <button
@@ -64,46 +78,52 @@
 
         </form>
 
+
     </header>
 
 
-    <!-- =========================
-         PAGE TITLE
-    ========================== -->
+
+    <!-- =====================================
+         TITLE
+    ====================================== -->
 
     <h1 class="page-title">
         ➤ Bulk Email Sender
     </h1>
 
 
-    <!-- =========================
-         MAIN GRID
-    ========================== -->
+
+    <!-- =====================================
+         GRID
+    ====================================== -->
 
     <div class="grid">
 
 
-        <!-- =========================
-             LEFT: COMPOSE
-        ========================== -->
+        <!-- =================================
+             COMPOSE
+        ================================== -->
 
         <section class="card compose">
+
 
             <h2>
                 ✎ Compose Message
             </h2>
 
 
-            <!-- Sender + Gmail -->
 
             <div class="form-grid">
 
+
+                <!-- Sender Name -->
 
                 <div>
 
                     <label for="senderName">
                         Sender Name
                     </label>
+
 
                     <input
                         id="senderName"
@@ -115,11 +135,15 @@
                 </div>
 
 
+
+                <!-- Gmail -->
+
                 <div>
 
                     <label for="senderEmail">
                         Your Gmail
                     </label>
+
 
                     <input
                         id="senderEmail"
@@ -131,6 +155,7 @@
                 </div>
 
 
+
                 <!-- App Password -->
 
                 <div>
@@ -139,7 +164,9 @@
                         App Password
                     </label>
 
+
                     <div class="password-wrap">
+
 
                         <input
                             id="appPassword"
@@ -148,18 +175,20 @@
                             autocomplete="off"
                         >
 
+
                         <button
                             type="button"
                             class="eye"
                             onclick="togglePassword()"
-                            aria-label="Show or hide password"
                         >
                             ◉
                         </button>
 
+
                     </div>
 
                 </div>
+
 
 
                 <!-- Subject -->
@@ -170,6 +199,7 @@
                         Email Subject
                     </label>
 
+
                     <input
                         id="subject"
                         type="text"
@@ -178,27 +208,27 @@
 
                 </div>
 
+
             </div>
 
 
-            <!-- =========================
-                 MESSAGE BODY
-            ========================== -->
+
+            <!-- Message -->
 
             <label for="body">
-                Message Body (Plain Text / HTML)
+                Message Body (Plain Text)
             </label>
+
 
             <textarea
                 id="body"
                 class="message"
-                placeholder="Write your email here... Spintax supported: {Hi|Hello} {name}"
+                placeholder="Write your email here... Spintax: {Hi|Hello} {name}"
             ></textarea>
 
 
-            <!-- =========================
-                 SPAM PROTECTION
-            ========================== -->
+
+            <!-- Spam Protection -->
 
             <div class="spam-title">
                 ● Spam Protection
@@ -207,62 +237,77 @@
 
             {% if turnstile_site_key %}
 
+
             <div
                 class="cf-turnstile"
                 data-sitekey="{{ turnstile_site_key }}"
             ></div>
 
+
             {% else %}
 
+
             <div class="captcha-demo">
+
 
                 <span class="check">
                     ✓
                 </span>
 
+
                 <span>
                     Protection ready
                 </span>
+
 
                 <small>
                     Turnstile can be enabled with environment variables.
                 </small>
 
+
             </div>
 
+
             {% endif %}
+
 
         </section>
 
 
 
-        <!-- =========================
-             RIGHT COLUMN
-        ========================== -->
+        <!-- =================================
+             RIGHT
+        ================================== -->
 
         <div class="right-col">
 
 
-            <!-- =========================
+            <!-- =================================
                  RECIPIENTS
-            ========================== -->
+            ================================== -->
 
             <section class="card recipients">
 
+
                 <div class="section-head">
 
+
                     <div>
+
 
                         <h2>
                             ♟ Recipients
                         </h2>
+
 
                         <p>
                             Paste emails
                             (comma separated, new lines, or Excel copy)
                         </p>
 
+
                     </div>
+
 
 
                     <span
@@ -272,7 +317,9 @@
                         0 found
                     </span>
 
+
                 </div>
+
 
 
                 <textarea
@@ -282,32 +329,32 @@
                 ></textarea>
 
 
+
                 <div
                     id="invalid"
                     class="invalid"
                 ></div>
 
+
             </section>
 
 
 
-            <!-- =========================
-                 PROGRESS MONITOR
-            ========================== -->
+            <!-- =================================
+                 PROGRESS
+            ================================== -->
 
             <section class="card progress-card">
+
 
                 <h2>
                     ◔ Progress Monitor
                 </h2>
 
 
-                <!-- Statistics -->
 
                 <div class="stats">
 
-
-                    <!-- TOTAL -->
 
                     <div class="stat">
 
@@ -322,7 +369,6 @@
                     </div>
 
 
-                    <!-- SENT -->
 
                     <div class="stat sent">
 
@@ -337,7 +383,6 @@
                     </div>
 
 
-                    <!-- FAILED -->
 
                     <div class="stat failed">
 
@@ -352,7 +397,6 @@
                     </div>
 
 
-                    <!-- REMAINING -->
 
                     <div class="stat remaining">
 
@@ -366,7 +410,9 @@
 
                     </div>
 
+
                 </div>
+
 
 
                 <!-- Progress Bar -->
@@ -380,6 +426,7 @@
                 </div>
 
 
+
                 <!-- Status -->
 
                 <div
@@ -390,7 +437,8 @@
                 </div>
 
 
-                <!-- Send Button -->
+
+                <!-- Send -->
 
                 <button
                     id="sendBtn"
@@ -402,18 +450,21 @@
                 </button>
 
 
-                <!-- Result -->
 
                 <div
                     id="result"
                     class="result"
                 ></div>
 
+
             </section>
+
 
         </div>
 
+
     </div>
+
 
 </div>
 
@@ -421,31 +472,38 @@
 
 <script>
 
+
 /* ==========================================
    HELPER
 ========================================== */
 
 const $ = (id) => {
+
     return document.getElementById(id);
+
 };
 
 
 
 /* ==========================================
-   SHOW / HIDE PASSWORD
+   PASSWORD
 ========================================== */
 
 function togglePassword() {
 
-    const password = $("appPassword");
+    const input =
+        $("appPassword");
 
-    if (password.type === "password") {
 
-        password.type = "text";
+    if (
+        input.type === "password"
+    ) {
+
+        input.type = "text";
 
     } else {
 
-        password.type = "password";
+        input.type = "password";
 
     }
 
@@ -459,37 +517,42 @@ function togglePassword() {
 
 async function parseRecipients() {
 
-    const raw = $("recipients").value;
+
+    const raw =
+        $("recipients").value;
+
 
     try {
 
-        const response = await fetch(
-            "/api/parse-recipients",
-            {
-                method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        const response =
+            await fetch(
+                "/api/parse-recipients",
+                {
 
-                body: JSON.stringify({
-                    recipients: raw
-                })
-            }
-        );
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        recipients: raw
+
+                    })
+
+                }
+            );
 
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
 
         $("found").textContent =
             `${data.count} found`;
-
-
-        $("invalid").textContent =
-            data.invalid.length
-                ? `Invalid entries ignored: ${data.invalid.join(", ")}`
-                : "";
 
 
         $("total").textContent =
@@ -499,12 +562,26 @@ async function parseRecipients() {
         $("remaining").textContent =
             data.count;
 
-    }
 
-    catch (error) {
+        if (
+            data.invalid.length
+        ) {
+
+            $("invalid").textContent =
+                "Invalid entries ignored: " +
+                data.invalid.join(", ");
+
+        } else {
+
+            $("invalid").textContent =
+                "";
+
+        }
+
+
+    } catch (error) {
 
         console.error(
-            "Recipient parsing error:",
             error
         );
 
@@ -514,9 +591,7 @@ async function parseRecipients() {
 
 
 
-/* ==========================================
-   RECIPIENT INPUT LISTENER
-========================================== */
+/* Listen */
 
 $("recipients").addEventListener(
     "input",
@@ -524,14 +599,14 @@ $("recipients").addEventListener(
 );
 
 
-/* Initial count */
+/* Initial */
 
 parseRecipients();
 
 
 
 /* ==========================================
-   UPDATE PROGRESS
+   PROGRESS
 ========================================== */
 
 function setProgress(
@@ -539,6 +614,7 @@ function setProgress(
     sent,
     failed
 ) {
+
 
     const completed =
         sent + failed;
@@ -568,25 +644,26 @@ function setProgress(
 
 
     const percentage =
-        total
+        total > 0
             ? Math.round(
-                (completed / total) * 100
-              )
+                completed / total * 100
+            )
             : 0;
 
 
     $("barFill").style.width =
-        `${percentage}%`;
+        percentage + "%";
 
 }
 
 
 
 /* ==========================================
-   CLOUDFLARE TURNSTILE TOKEN
+   TURNSTILE
 ========================================== */
 
 function getTurnstileToken() {
+
 
     const element =
         document.querySelector(
@@ -613,36 +690,35 @@ function getTurnstileToken() {
 
 async function sendAll() {
 
+
     const button =
         $("sendBtn");
 
 
-    const recipients =
-        $("recipients").value;
+    button.disabled =
+        true;
 
-
-    /* Disable button */
-
-    button.disabled = true;
 
     button.textContent =
         "Sending...";
-
-
-    $("result").textContent =
-        "";
 
 
     $("status").textContent =
         "● Sending messages...";
 
 
+    $("result").textContent =
+        "";
+
+
     try {
+
 
         const response =
             await fetch(
                 "/api/send",
                 {
+
                     method: "POST",
 
                     headers: {
@@ -668,12 +744,13 @@ async function sendAll() {
                             $("body").value,
 
                         recipients:
-                            recipients,
+                            $("recipients").value,
 
                         turnstile_token:
                             getTurnstileToken()
 
                     })
+
                 }
             );
 
@@ -681,8 +758,6 @@ async function sendAll() {
         const data =
             await response.json();
 
-
-        /* Error */
 
         if (
             !response.ok ||
@@ -697,8 +772,6 @@ async function sendAll() {
         }
 
 
-        /* Update statistics */
-
         setProgress(
             data.total,
             data.sent,
@@ -706,9 +779,9 @@ async function sendAll() {
         );
 
 
-        /* Status */
-
-        if (data.failed) {
+        if (
+            data.failed > 0
+        ) {
 
             $("status").textContent =
                 "● Completed with some failures";
@@ -721,9 +794,7 @@ async function sendAll() {
         }
 
 
-        /* Result */
-
-        let resultHTML =
+        let html =
             `<b>${data.sent}</b> sent · ` +
             `<b>${data.failed}</b> failed`;
 
@@ -733,33 +804,40 @@ async function sendAll() {
             data.failures.length
         ) {
 
-            resultHTML +=
+
+            html +=
                 "<br><small>";
 
 
-            resultHTML +=
+            html +=
                 data.failures
                     .map(
                         item =>
-                            `${escapeHtml(item.email)}: ` +
-                            `${escapeHtml(item.error)}`
+                            escapeHtml(
+                                item.email
+                            )
+                            +
+                            ": "
+                            +
+                            escapeHtml(
+                                item.error
+                            )
                     )
                     .join("<br>");
 
 
-            resultHTML +=
+            html +=
                 "</small>";
 
         }
 
 
         $("result").innerHTML =
-            resultHTML;
-
-    }
+            html;
 
 
-    catch (error) {
+    } catch (error) {
+
 
         $("status").textContent =
             "● Send error";
@@ -768,10 +846,9 @@ async function sendAll() {
         $("result").textContent =
             error.message;
 
-    }
 
+    } finally {
 
-    finally {
 
         button.disabled =
             false;
@@ -790,16 +867,18 @@ async function sendAll() {
 
 
 /* ==========================================
-   HTML ESCAPE
+   ESCAPE HTML
 ========================================== */
 
 function escapeHtml(value) {
+
 
     return String(value).replace(
         /[&<>"']/g,
         function(character) {
 
-            return {
+
+            const entities = {
 
                 "&": "&amp;",
 
@@ -811,14 +890,21 @@ function escapeHtml(value) {
 
                 "'": "&#039;"
 
-            }[character];
+            };
+
+
+            return entities[
+                character
+            ];
 
         }
     );
 
 }
 
+
 </script>
+
 
 </body>
 
