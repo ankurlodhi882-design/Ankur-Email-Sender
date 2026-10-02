@@ -17,367 +17,567 @@
     href="{{ url_for('static', filename='style.css') }}"
 >
 
-{% if turnstile_site_key %}
-
-<script
-    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-    async
-    defer
-></script>
-
-{% endif %}
-
 </head>
+
 
 <body>
 
-<div class="page">
+
+<div class="app">
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
 <header class="topbar">
 
-<div class="brand">
 
-<div class="brand-shield">
-    ♢
-</div>
+    <div class="brand">
 
-<div>
-    Secure Mail Console
-</div>
 
-</div>
+        <div class="logo-mark">
+            ✦
+        </div>
 
-<form
-    method="POST"
-    action="/logout"
->
 
-<button
-    class="logout"
-    type="submit"
->
-    ⇥ Logout
-</button>
+        <div>
 
-</form>
+            <div class="logo-title">
+                Secure Mail Console
+            </div>
+
+            <div class="logo-subtitle">
+                Email delivery workspace
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="/logout"
+    >
+
+        <button
+            type="submit"
+            class="logout-button"
+        >
+            ⇥ Logout
+        </button>
+
+    </form>
+
 
 </header>
 
 
-<h1 class="page-title">
-    ➤ Bulk Email Sender
-</h1>
+
+<!-- =====================================================
+     PAGE TITLE
+===================================================== -->
+
+<div class="page-title-row">
 
 
-<div class="grid">
+    <div>
 
-<section class="card compose">
+        <h1>
+            Bulk Email Sender
+        </h1>
 
-<h2>
-    ✎ Compose Message
-</h2>
+        <p>
+            Compose, personalize and send your emails.
+        </p>
+
+    </div>
 
 
-<div class="form-grid">
+    <div class="connection-status">
+        <span></span>
+        SMTP Ready
+    </div>
 
-<div>
-
-<label for="senderName">
-    Sender Name
-</label>
-
-<input
-    id="senderName"
-    type="text"
-    placeholder="E.g., John Doe"
-    autocomplete="name"
->
 
 </div>
 
 
-<div>
 
-<label for="senderEmail">
-    Your Gmail
-</label>
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
-<input
-    id="senderEmail"
-    type="email"
-    placeholder="you@gmail.com"
-    autocomplete="email"
->
-
-</div>
+<div class="dashboard">
 
 
-<div>
+<!-- =====================================================
+     COMPOSE
+===================================================== -->
 
-<label for="appPassword">
-    App Password
-</label>
-
-<div class="password-wrap">
-
-<input
-    id="appPassword"
-    type="password"
-    placeholder="16-char app password"
-    autocomplete="off"
->
-
-<button
-    type="button"
-    class="eye"
-    onclick="togglePassword()"
->
-    ◉
-</button>
-
-</div>
-
-</div>
+<section class="card compose-card">
 
 
-<div>
-
-<label for="subject">
-    Email Subject
-</label>
-
-<input
-    id="subject"
-    type="text"
-    placeholder="Enter subject line..."
->
-
-</div>
-
-</div>
+    <div class="section-title">
 
 
-<label for="body">
-    Message Body (Plain Text)
-</label>
-
-<textarea
-    id="body"
-    class="message"
-    placeholder="Write your email here... Spintax: {Hi|Hello} {name}"
-></textarea>
+        <div class="section-icon">
+            ✎
+        </div>
 
 
-<div class="spam-title">
-    ● Spam Protection
-</div>
+        <div>
+
+            <h2>
+                Compose Message
+            </h2>
+
+            <p>
+                Enter your sender and email details.
+            </p>
+
+        </div>
 
 
-{% if turnstile_site_key %}
+    </div>
 
-<div
-    class="cf-turnstile"
-    data-sitekey="{{ turnstile_site_key }}"
-></div>
 
-{% else %}
 
-<div class="captcha-demo">
+    <div class="form-grid">
 
-<span class="check">
-    ✓
-</span>
 
-<span>
-    Protection ready
-</span>
+        <div class="field">
 
-<small>
-    Turnstile can be enabled with environment variables.
-</small>
+            <label>
+                Sender Name
+            </label>
 
-</div>
+            <input
+                id="senderName"
+                type="text"
+                placeholder="Example: Ankur"
+            >
 
-{% endif %}
+        </div>
+
+
+
+        <div class="field">
+
+            <label>
+                Your Gmail
+            </label>
+
+            <input
+                id="senderEmail"
+                type="email"
+                placeholder="you@gmail.com"
+            >
+
+        </div>
+
+
+
+        <div class="field">
+
+            <label>
+                Gmail App Password
+            </label>
+
+
+            <div class="password-wrapper">
+
+                <input
+                    id="appPassword"
+                    type="password"
+                    placeholder="16-character App Password"
+                >
+
+                <button
+                    type="button"
+                    onclick="togglePassword()"
+                >
+                    ◉
+                </button>
+
+            </div>
+
+
+            <small>
+                Use Gmail App Password.
+            </small>
+
+        </div>
+
+
+
+        <div class="field">
+
+            <label>
+                Reply-To
+            </label>
+
+            <input
+                id="replyTo"
+                type="email"
+                placeholder="Optional"
+            >
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="field">
+
+        <label>
+            Email Subject
+        </label>
+
+        <input
+            id="subject"
+            type="text"
+            placeholder="Enter subject..."
+        >
+
+    </div>
+
+
+
+    <div class="field">
+
+        <div class="label-line">
+
+            <label>
+                Message Body
+            </label>
+
+            <span>
+                {name} supported
+            </span>
+
+        </div>
+
+
+        <textarea
+            id="body"
+            placeholder="Write your email message..."
+        ></textarea>
+
+    </div>
+
+
+
+    <div class="personalization">
+
+        <strong>
+            Personalization
+        </strong>
+
+        <span>
+            Use <b>{name}</b> to insert the recipient name automatically.
+        </span>
+
+    </div>
+
 
 </section>
 
 
-<div class="right-col">
+
+<!-- =====================================================
+     RIGHT
+===================================================== -->
+
+<div class="right-side">
 
 
-<section class="card recipients">
+<!-- =====================================================
+     RECIPIENTS
+===================================================== -->
 
-<div class="section-head">
-
-<div>
-
-<h2>
-    ♟ Recipients
-</h2>
-
-<p>
-    Paste emails (comma separated, new lines, or Excel copy)
-</p>
-
-</div>
-
-<span
-    id="found"
-    class="badge"
->
-    0 found
-</span>
-
-</div>
+<section class="card">
 
 
-<textarea
-    id="recipients"
-    class="recipient-box"
-    placeholder="recipient1@example.com&#10;recipient2@example.com"
-></textarea>
+    <div class="section-title">
 
 
-<div
-    id="invalid"
-    class="invalid"
-></div>
+        <div class="section-icon blue">
+            ♟
+        </div>
+
+
+        <div class="recipient-title">
+
+            <div>
+
+                <h2>
+                    Recipients
+                </h2>
+
+                <p>
+                    One email per line, comma or semicolon separated.
+                </p>
+
+            </div>
+
+
+            <span
+                id="found"
+                class="badge"
+            >
+                0 found
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <textarea
+        id="recipients"
+        class="recipients"
+        placeholder="first@example.com
+second@example.com
+third@example.com"
+    ></textarea>
+
+
+    <div
+        id="invalid"
+        class="invalid"
+    ></div>
+
 
 </section>
 
 
-<section class="card progress-card">
 
-<h2>
-    ◔ Progress Monitor
-</h2>
+<!-- =====================================================
+     PROGRESS
+===================================================== -->
 
-
-<div class="stats">
-
-<div class="stat">
-
-<span>
-    TOTAL
-</span>
-
-<strong id="total">
-    0
-</strong>
-
-</div>
+<section class="card">
 
 
-<div class="stat sent">
-
-<span>
-    SENT
-</span>
-
-<strong id="sent">
-    0
-</strong>
-
-</div>
+    <div class="section-title">
 
 
-<div class="stat failed">
-
-<span>
-    FAILED
-</span>
-
-<strong id="failed">
-    0
-</strong>
-
-</div>
+        <div class="section-icon purple">
+            ◔
+        </div>
 
 
-<div class="stat remaining">
+        <div>
 
-<span>
-    REMAINING
-</span>
+            <h2>
+                Progress Monitor
+            </h2>
 
-<strong id="remaining">
-    0
-</strong>
+            <p>
+                View your current sending result.
+            </p>
 
-</div>
-
-</div>
+        </div>
 
 
-<div class="bar">
-
-<div id="barFill"></div>
-
-</div>
+    </div>
 
 
-<div
-    id="status"
-    class="status"
->
-    ● Ready to send
-</div>
+
+    <div class="stats">
 
 
-<button
-    id="sendBtn"
-    class="send-all"
-    type="button"
-    onclick="sendAll()"
->
-    ➤ Send All
-</button>
+        <div class="stat">
+
+            <span>
+                TOTAL
+            </span>
+
+            <strong id="total">
+                0
+            </strong>
+
+        </div>
 
 
-<div
-    id="result"
-    class="result"
-></div>
+        <div class="stat green">
+
+            <span>
+                SENT
+            </span>
+
+            <strong id="sent">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat red">
+
+            <span>
+                FAILED
+            </span>
+
+            <strong id="failed">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat orange">
+
+            <span>
+                REMAINING
+            </span>
+
+            <strong id="remaining">
+                0
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="progress">
+
+        <div
+            id="barFill"
+            class="progress-bar"
+        ></div>
+
+    </div>
+
+
+
+    <div
+        id="status"
+        class="status"
+    >
+        ● Ready to send
+    </div>
+
+
+
+    <button
+        id="sendBtn"
+        class="send-button"
+        type="button"
+        onclick="sendAll()"
+    >
+        ➤ Send All Emails
+    </button>
+
+
+
+    <div
+        id="result"
+        class="result"
+    ></div>
+
 
 </section>
 
-</div>
+
+
+<!-- =====================================================
+     INFORMATION
+===================================================== -->
+
+<section class="card information">
+
+    <h3>
+        Before Sending
+    </h3>
+
+    <div>
+        <b>✓</b>
+        Use a valid Gmail App Password.
+    </div>
+
+    <div>
+        <b>✓</b>
+        Use recipients who have opted in to receive your emails.
+    </div>
+
+    <div>
+        <b>✓</b>
+        Configure SPF, DKIM and DMARC for your domain when applicable.
+    </div>
+
+</section>
+
 
 </div>
 
+
 </div>
+
+
+</div>
+
 
 
 <script>
 
-const $ = (id) =>
-    document.getElementById(id);
 
+// =========================================================
+// PASSWORD
+// =========================================================
 
 function togglePassword() {
 
     const input =
-        $("appPassword");
+        document.getElementById(
+            "appPassword"
+        );
 
-    if (
+    input.type =
         input.type === "password"
-    ) {
+            ? "text"
+            : "password";
+}
 
-        input.type = "text";
 
-    } else {
+// =========================================================
+// RECIPIENT PARSING
+// =========================================================
 
-        input.type = "password";
+let parseTimeout;
 
-    }
+
+function scheduleParse() {
+
+    clearTimeout(
+        parseTimeout
+    );
+
+    parseTimeout =
+        setTimeout(
+            parseRecipients,
+            250
+        );
 }
 
 
 async function parseRecipients() {
 
     const raw =
-        $("recipients").value;
+        document.getElementById(
+            "recipients"
+        ).value;
+
 
     try {
 
@@ -385,6 +585,7 @@ async function parseRecipients() {
             await fetch(
                 "/api/parse-recipients",
                 {
+
                     method: "POST",
 
                     headers: {
@@ -395,52 +596,84 @@ async function parseRecipients() {
                     body: JSON.stringify({
                         recipients: raw
                     })
+
                 }
             );
+
+
+        if (!response.ok) {
+            return;
+        }
+
 
         const data =
             await response.json();
 
-        $("found").textContent =
-            `${data.count} found`;
 
-        $("total").textContent =
+        document.getElementById(
+            "found"
+        ).textContent =
+            data.count + " found";
+
+
+        document.getElementById(
+            "total"
+        ).textContent =
             data.count;
 
-        $("remaining").textContent =
+
+        document.getElementById(
+            "remaining"
+        ).textContent =
             data.count;
+
+
+        const invalid =
+            document.getElementById(
+                "invalid"
+            );
+
 
         if (
+            data.invalid &&
             data.invalid.length
         ) {
 
-            $("invalid").textContent =
+            invalid.textContent =
                 "Invalid entries ignored: " +
                 data.invalid.join(", ");
 
         } else {
 
-            $("invalid").textContent =
+            invalid.textContent =
                 "";
 
         }
+
 
     } catch (error) {
 
         console.error(error);
 
     }
+
 }
 
 
-$("recipients").addEventListener(
+document.getElementById(
+    "recipients"
+).addEventListener(
     "input",
-    parseRecipients
+    scheduleParse
 );
 
 
 parseRecipients();
 
+
+// =========================================================
+// PROGRESS
+// =========================================================
 
 function setProgress(
     total,
@@ -451,23 +684,37 @@ function setProgress(
     const completed =
         sent + failed;
 
+
     const remaining =
         Math.max(
             0,
             total - completed
         );
 
-    $("total").textContent =
+
+    document.getElementById(
+        "total"
+    ).textContent =
         total;
 
-    $("sent").textContent =
+
+    document.getElementById(
+        "sent"
+    ).textContent =
         sent;
 
-    $("failed").textContent =
+
+    document.getElementById(
+        "failed"
+    ).textContent =
         failed;
 
-    $("remaining").textContent =
+
+    document.getElementById(
+        "remaining"
+    ).textContent =
         remaining;
+
 
     const percentage =
         total > 0
@@ -475,36 +722,78 @@ function setProgress(
                 completed /
                 total *
                 100
-              )
+            )
             : 0;
 
-    $("barFill").style.width =
+
+    document.getElementById(
+        "barFill"
+    ).style.width =
         percentage + "%";
+
 }
 
 
-function getTurnstileToken() {
+// =========================================================
+// HTML ESCAPE
+// =========================================================
 
-    const element =
-        document.querySelector(
-            '[name="cf-turnstile-response"]'
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(
+            /[&<>"']/g,
+            function(character) {
+
+                const entities = {
+
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#039;"
+
+                };
+
+                return entities[
+                    character
+                ];
+
+            }
         );
 
-    if (element) {
-
-        return element.value;
-
-    }
-
-    return "";
-
 }
 
+
+// =========================================================
+// SEND
+// =========================================================
 
 async function sendAll() {
 
     const button =
-        $("sendBtn");
+        document.getElementById(
+            "sendBtn"
+        );
+
+
+    const recipients =
+        document.getElementById(
+            "recipients"
+        ).value.trim();
+
+
+    if (!recipients) {
+
+        document.getElementById(
+            "status"
+        ).textContent =
+            "● Please add recipients.";
+
+        return;
+
+    }
+
 
     button.disabled =
         true;
@@ -512,11 +801,26 @@ async function sendAll() {
     button.textContent =
         "Sending...";
 
-    $("status").textContent =
-        "● Sending messages...";
 
-    $("result").textContent =
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.className =
+        "status sending";
+
+
+    status.textContent =
+        "● Sending emails...";
+
+
+    document.getElementById(
+        "result"
+    ).innerHTML =
         "";
+
 
     try {
 
@@ -524,6 +828,7 @@ async function sendAll() {
             await fetch(
                 "/api/send",
                 {
+
                     method: "POST",
 
                     headers: {
@@ -534,27 +839,40 @@ async function sendAll() {
                     body: JSON.stringify({
 
                         sender_name:
-                            $("senderName").value,
+                            document.getElementById(
+                                "senderName"
+                            ).value,
 
                         sender_email:
-                            $("senderEmail").value,
+                            document.getElementById(
+                                "senderEmail"
+                            ).value,
 
                         app_password:
-                            $("appPassword").value,
+                            document.getElementById(
+                                "appPassword"
+                            ).value,
+
+                        reply_to:
+                            document.getElementById(
+                                "replyTo"
+                            ).value,
 
                         subject:
-                            $("subject").value,
+                            document.getElementById(
+                                "subject"
+                            ).value,
 
                         body:
-                            $("body").value,
+                            document.getElementById(
+                                "body"
+                            ).value,
 
                         recipients:
-                            $("recipients").value,
-
-                        turnstile_token:
-                            getTurnstileToken()
+                            recipients
 
                     })
+
                 }
             );
 
@@ -584,108 +902,112 @@ async function sendAll() {
 
 
         if (
-            data.failed > 0
+            data.failed === 0
         ) {
 
-            $("status").textContent =
-                "● Completed with some failures";
+            status.className =
+                "status success";
+
+            status.textContent =
+                "● All emails sent successfully.";
 
         } else {
 
-            $("status").textContent =
-                "● All messages sent successfully";
+            status.className =
+                "status warning";
+
+            status.textContent =
+                "● Sending completed with failures.";
 
         }
 
 
         let html =
-            `<b>${data.sent}</b> sent · ` +
-            `<b>${data.failed}</b> failed`;
+            "<div class='success-result'>" +
+            "<b>" +
+            data.sent +
+            "</b> emails sent successfully.</div>";
 
 
         if (
-            data.failures &&
-            data.failures.length
+            data.failed > 0
         ) {
 
             html +=
-                "<br><small>";
+                "<div class='failed-result'>" +
+                "<b>" +
+                data.failed +
+                "</b> emails failed.</div>";
+
 
             html +=
-                data.failures
-                .map(
-                    item =>
+                "<div class='failure-list'>";
+
+
+            data.failures.forEach(
+                function(item) {
+
+                    html +=
+                        "<div>" +
                         escapeHtml(
                             item.email
                         ) +
-                        ": " +
+                        " — " +
                         escapeHtml(
                             item.error
-                        )
-                )
-                .join("<br>");
+                        ) +
+                        "</div>";
+
+                }
+            );
+
 
             html +=
-                "</small>";
+                "</div>";
 
         }
 
 
-        $("result").innerHTML =
+        document.getElementById(
+            "result"
+        ).innerHTML =
             html;
 
 
     } catch (error) {
 
-        $("status").textContent =
-            "● Send error";
+        status.className =
+            "status error";
 
-        $("result").textContent =
-            error.message;
+        status.textContent =
+            "● Sending error";
 
 
-    } finally {
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "➤ Send All";
-
-        parseRecipients();
+        document.getElementById(
+            "result"
+        ).innerHTML =
+            "<div class='failed-result'>" +
+            escapeHtml(
+                error.message
+            ) +
+            "</div>";
 
     }
 
-}
+
+    button.disabled =
+        false;
+
+    button.textContent =
+        "➤ Send All Emails";
 
 
-function escapeHtml(value) {
-
-    return String(value)
-        .replace(
-            /[&<>"']/g,
-            function(character) {
-
-                const entities = {
-
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;",
-                    '"': "&quot;",
-                    "'": "&#039;"
-
-                };
-
-                return entities[
-                    character
-                ];
-
-            }
-        );
+    parseRecipients();
 
 }
 
 </script>
+
 
 </body>
 </html>
