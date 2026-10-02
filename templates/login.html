@@ -2,18 +2,21 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Secure Mail Console</title>
+    <title>Secure Mail Console - Login</title>
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}"
     >
+
 </head>
 
 <body class="login-page">
@@ -22,24 +25,30 @@
 
         <div class="login-brand">
 
-            <div class="logo-mark">✦</div>
+            <div class="logo">
+                ✦
+            </div>
 
             <div>
-                <div class="logo-title">
-                    Secure Mail Console
-                </div>
 
-                <div class="logo-subtitle">
+                <h2>
+                    Secure Mail Console
+                </h2>
+
+                <p>
                     Secure email workspace
-                </div>
+                </p>
+
             </div>
 
         </div>
 
 
-        <h1>Welcome Back</h1>
+        <h1>
+            Welcome Back
+        </h1>
 
-        <p class="login-description">
+        <p class="muted">
             Sign in to access your email dashboard.
         </p>
 
@@ -58,28 +67,26 @@
             action="/login"
         >
 
-            <label for="username">
+            <label>
                 Username
             </label>
 
             <input
-                id="username"
-                name="username"
                 type="text"
+                name="username"
                 placeholder="Enter username"
                 autocomplete="username"
                 required
             >
 
 
-            <label for="password">
+            <label>
                 Password
             </label>
 
             <input
-                id="password"
-                name="password"
                 type="password"
+                name="password"
                 placeholder="Enter password"
                 autocomplete="current-password"
                 required
@@ -87,8 +94,8 @@
 
 
             <button
-                class="login-button"
                 type="submit"
+                class="primary-button"
             >
                 Sign In
             </button>
@@ -96,7 +103,7 @@
         </form>
 
 
-        <div class="login-footer">
+        <div class="footer-text">
             Secure Mail Console
         </div>
 
