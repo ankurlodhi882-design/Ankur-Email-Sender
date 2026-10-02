@@ -3,21 +3,19 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>
-        Secure Mail Console - Login
-    </title>
+<title>Secure Mail Console</title>
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+>
 
 </head>
 
@@ -25,87 +23,98 @@
 <body class="login-page">
 
 
-<main class="login-card">
+<div class="login-card">
 
 
-    <div class="brand">
+    <div class="login-brand">
 
-        <div class="brand-icon">
-            ♢
+        <div class="logo-mark">
+            ✦
         </div>
 
         <div>
-            Secure Mail Console
+
+            <div class="logo-title">
+                Secure Mail Console
+            </div>
+
+            <div class="logo-subtitle">
+                Secure email workspace
+            </div>
+
         </div>
 
     </div>
 
 
-    <p class="muted">
-        Sign in to access the mail console.
-    </p>
+    <h1>
+        Welcome Back
+    </h1>
 
+    <p class="login-description">
+        Sign in to access your email dashboard.
+    </p>
 
 
     {% if error %}
 
-    <div class="alert error">
+    <div class="error-box">
         {{ error }}
     </div>
 
     {% endif %}
 
 
-
     <form
         method="POST"
         action="/login"
-        class="login-form"
     >
 
-
-        <label>
+        <label for="username">
             Username
         </label>
 
         <input
+            id="username"
             name="username"
             type="text"
+            placeholder="Enter username"
             autocomplete="username"
-            placeholder="Username"
             required
         >
 
 
-
-        <label>
+        <label for="password">
             Password
         </label>
 
         <input
+            id="password"
             name="password"
             type="password"
+            placeholder="Enter password"
             autocomplete="current-password"
-            placeholder="Password"
             required
         >
 
 
-
         <button
-            class="primary full"
+            class="login-button"
             type="submit"
         >
             Sign In
         </button>
 
-
     </form>
 
 
-</main>
+    <div class="login-footer">
+        Secure Mail Console
+    </div>
+
+
+</div>
 
 
 </body>
-
 </html>
