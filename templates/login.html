@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Secure Mail Console - Login
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body class="login-page">
+
+
+<main class="login-card">
+
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            ♢
+        </div>
+
+        <div>
+            Secure Mail Console
+        </div>
+
+    </div>
+
+
+    <p class="muted">
+        Sign in to access the mail console.
+    </p>
+
+
+
+    {% if error %}
+
+    <div class="alert error">
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+
+
+    <form
+        method="POST"
+        action="/login"
+        class="login-form"
+    >
+
+
+        <label>
+            Username
+        </label>
+
+        <input
+            name="username"
+            type="text"
+            autocomplete="username"
+            placeholder="Username"
+            required
+        >
+
+
+
+        <label>
+            Password
+        </label>
+
+        <input
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Password"
+            required
+        >
+
+
+
+        <button
+            class="primary full"
+            type="submit"
+        >
+            Sign In
+        </button>
+
+
+    </form>
+
+
+</main>
+
+
+</body>
+
+</html>
