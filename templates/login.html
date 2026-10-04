@@ -1,113 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Secure Mail Console</title>
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Mail Login</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 
 <body class="login-page">
 
 <div class="login-card">
 
-    <div class="brand">
+    <div class="logo">✉</div>
 
-        <div class="brand-icon">
-            ✉
-        </div>
+    <h1>Secure Mail Console</h1>
 
-        <div>
-
-            <h1>Secure Mail</h1>
-
-            <p>Mail Console</p>
-
-        </div>
-
-    </div>
-
-
-    <div class="login-title">
-
-        <h2>Sign in</h2>
-
-        <p>
-            Enter your console credentials.
-        </p>
-
-    </div>
-
+    <p class="muted">
+        Sign in to continue
+    </p>
 
     {% if error %}
-
-    <div class="error-box">
+    <div class="error">
         {{ error }}
     </div>
-
     {% endif %}
 
+    <form method="POST"
+          action="{{ url_for('login_post') }}">
 
-    <form
-        method="POST"
-        action="{{ url_for('login_post') }}"
-    >
-
-        <label>
-            Username
-        </label>
+        <label>Username</label>
 
         <input
             type="text"
             name="username"
             placeholder="Username"
-            autocomplete="username"
             required
         >
 
-
-        <label>
-            Password
-        </label>
+        <label>Password</label>
 
         <input
             type="password"
             name="password"
             placeholder="Password"
-            autocomplete="current-password"
             required
         >
 
-
-        <button
-            type="submit"
-            class="primary-button"
-        >
+        <button type="submit">
             Sign In
         </button>
 
     </form>
 
-
-    <div class="login-footer">
-        Secure Mail Console
-    </div>
-
 </div>
 
 </body>
-
 </html>
