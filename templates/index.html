@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -16,29 +14,19 @@
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}"
     >
-
 </head>
 
 <body>
 
 <header class="topbar">
 
-    <div class="topbar-left">
-
-        <div class="logo">
-            ✉
-        </div>
+    <div class="topbar-brand">
+        <div class="brand-icon small">✉</div>
 
         <div>
-            <div class="brand-title">
-                Secure Mail Console
-            </div>
-
-            <div class="brand-subtitle">
-                Gmail SMTP Mail Sender
-            </div>
+            <strong>Secure Mail Console</strong>
+            <span>Gmail SMTP</span>
         </div>
-
     </div>
 
     <form
@@ -58,110 +46,97 @@
     <section class="hero">
 
         <div>
-
-            <h1>
-                Email Dashboard
-            </h1>
+            <h1>Email Dashboard</h1>
 
             <p>
-                Send individual emails to up to
-                <strong>25 recipients</strong>.
+                Send authorized email messages through
+                authenticated Gmail SMTP.
             </p>
-
         </div>
 
-        <div class="status-pill">
-            ● Ready
+        <div class="limit-badge">
+            Maximum 25 recipients
         </div>
 
     </section>
 
 
-    <div class="grid">
+    <section class="card">
+
+        <div class="card-title">
+            <h2>Sender Information</h2>
+            <span>Gmail SMTP</span>
+        </div>
 
 
-        <!-- SENDER -->
+        <div class="grid two">
 
-        <section class="card">
+            <div class="field">
 
-            <div class="card-header">
+                <label for="sender_name">
+                    Sender Name
+                </label>
 
-                <div>
-                    <h2>Sender</h2>
-
-                    <p>
-                        Gmail SMTP credentials
-                    </p>
-                </div>
-
-                <span class="step">
-                    01
-                </span>
+                <input
+                    id="sender_name"
+                    type="text"
+                    placeholder="Your Name"
+                >
 
             </div>
 
 
-            <label>
-                Sender Name
-            </label>
+            <div class="field">
 
-            <input
-                id="senderName"
-                type="text"
-                placeholder="Your Name"
-            >
+                <label for="sender_email">
+                    Gmail Address
+                </label>
 
+                <input
+                    id="sender_email"
+                    type="email"
+                    placeholder="you@gmail.com"
+                >
 
-            <label>
-                Gmail Address
-            </label>
+            </div>
 
-            <input
-                id="senderEmail"
-                type="email"
-                placeholder="you@gmail.com"
-            >
+        </div>
 
 
-            <label>
+        <div class="field">
+
+            <label for="app_password">
                 Gmail App Password
             </label>
 
             <input
-                id="appPassword"
+                id="app_password"
                 type="password"
                 placeholder="16-character App Password"
+                autocomplete="off"
             >
 
-            <div class="hint">
-                Use a Gmail App Password, not your normal Gmail password.
-            </div>
+            <small>
+                Use a Gmail App Password, not your normal
+                Gmail account password.
+            </small>
 
-        </section>
+        </div>
 
-
-        <!-- MESSAGE -->
-
-        <section class="card">
-
-            <div class="card-header">
-
-                <div>
-                    <h2>Message</h2>
-
-                    <p>
-                        Create your email
-                    </p>
-                </div>
-
-                <span class="step">
-                    02
-                </span>
-
-            </div>
+    </section>
 
 
-            <label>
+    <section class="card">
+
+        <div class="card-title">
+            <h2>Message</h2>
+            <span>{name} supported</span>
+        </div>
+
+
+        <div class="field">
+
+            <label for="subject">
                 Subject
             </label>
 
@@ -171,137 +146,122 @@
                 placeholder="Email subject"
             >
 
+        </div>
 
-            <label>
+
+        <div class="field">
+
+            <label for="body">
                 Message
             </label>
 
             <textarea
                 id="body"
-                rows="11"
-                placeholder="Hi {name},
+                rows="9"
+                placeholder="Hello {name},
 
 Write your message here..."
             ></textarea>
 
+            <small>
+                Use <strong>{name}</strong> to personalize
+                the message from the recipient address.
+            </small>
 
-            <div class="hint">
-                You can use <strong>{name}</strong>
-                for basic recipient-name personalization.
-            </div>
+        </div>
 
-        </section>
-
-
-    </div>
+    </section>
 
 
-    <!-- RECIPIENTS -->
+    <section class="card">
 
-    <section class="card recipient-card">
-
-        <div class="card-header">
+        <div class="card-title">
 
             <div>
-
                 <h2>Recipients</h2>
-
                 <p>
-                    Maximum 25 valid email addresses
+                    Separate addresses with commas,
+                    spaces, semicolons, or new lines.
                 </p>
-
             </div>
 
-            <span
+            <div
                 id="recipientCount"
                 class="count-badge"
             >
                 0 / 25
-            </span>
+            </div>
 
         </div>
 
 
-        <label>
-            Email Addresses
-        </label>
+        <div class="field">
 
-        <textarea
-            id="recipients"
-            rows="7"
-            placeholder="john@example.com
-sarah@example.com
-alex@example.com"
-        ></textarea>
+            <textarea
+                id="recipients"
+                rows="8"
+                placeholder="person1@example.com
+person2@example.com
+person3@example.com"
+            ></textarea>
+
+        </div>
 
 
-        <div class="recipient-actions">
+        <div class="actions">
 
             <button
-                type="button"
                 id="checkBtn"
                 class="secondary-btn"
+                type="button"
             >
                 Check Recipients
             </button>
 
             <button
-                type="button"
                 id="sendBtn"
                 class="primary-btn"
+                type="button"
             >
-                Send Emails
+                Send Email
             </button>
 
         </div>
 
 
         <div
-            id="checkResult"
-            class="result"
-        ></div>
-
-        <div
-            id="sendResult"
-            class="result"
+            id="status"
+            class="status hidden"
         ></div>
 
     </section>
 
 
-    <!-- INFO -->
+    <section
+        id="resultCard"
+        class="card hidden"
+    >
 
-    <section class="info-card">
+        <div class="card-title">
+            <h2>Send Result</h2>
+        </div>
 
-        <h3>
-            Before sending
-        </h3>
-
-        <ul>
-
-            <li>
-                Make sure your Gmail account can use
-                App Passwords.
-            </li>
-
-            <li>
-                Test with one recipient first.
-            </li>
-
-            <li>
-                Check Gmail's Sent folder if delivery
-                is not visible at the recipient.
-            </li>
-
-            <li>
-                Delivery to Inbox cannot be guaranteed;
-                recipient providers may classify messages
-                differently.
-            </li>
-
-        </ul>
+        <div id="result"></div>
 
     </section>
+
+
+    <div class="notice">
+
+        <strong>Delivery note:</strong>
+
+        SMTP acceptance means Gmail accepted the message
+        for processing. It does not guarantee Inbox placement.
+        Recipient spam, promotions, filtering, reputation,
+        authentication, and recipient-provider policies can
+        affect final placement.
+
+    </div>
 
 </main>
 
@@ -314,40 +274,72 @@ const recipientsInput =
 const recipientCount =
     document.getElementById("recipientCount");
 
+const statusBox =
+    document.getElementById("status");
+
+const resultCard =
+    document.getElementById("resultCard");
+
+const resultBox =
+    document.getElementById("result");
+
 const checkBtn =
     document.getElementById("checkBtn");
 
 const sendBtn =
     document.getElementById("sendBtn");
 
-const checkResult =
-    document.getElementById("checkResult");
 
-const sendResult =
-    document.getElementById("sendResult");
+function parseLocalRecipients() {
 
+    const values =
+        recipientsInput.value
+            .split(/[\s,;]+/)
+            .map(x => x.trim())
+            .filter(Boolean);
 
-function parseEmails(value) {
-
-    return value
-        .split(/[\s,;]+/)
-        .map(x => x.trim())
-        .filter(Boolean);
+    return [...new Set(
+        values.map(x => x.toLowerCase())
+    )];
 
 }
 
 
 function updateCount() {
 
-    const emails =
-        [...new Set(
-            parseEmails(
-                recipientsInput.value
-            ).map(x => x.toLowerCase())
-        )];
+    const count =
+        parseLocalRecipients().length;
 
     recipientCount.textContent =
-        `${emails.length} / 25`;
+        `${count} / 25`;
+
+    if (count > 25) {
+        recipientCount.classList.add("danger");
+    } else {
+        recipientCount.classList.remove("danger");
+    }
+
+}
+
+
+function showStatus(message, type = "info") {
+
+    statusBox.textContent = message;
+
+    statusBox.className =
+        `status ${type}`;
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
 }
 
@@ -360,13 +352,12 @@ recipientsInput.addEventListener(
 
 checkBtn.addEventListener(
     "click",
-    async function () {
+    async () => {
 
-        checkResult.className =
-            "result info-result";
-
-        checkResult.textContent =
-            "Checking recipients...";
+        showStatus(
+            "Checking recipients...",
+            "info"
+        );
 
         try {
 
@@ -375,10 +366,12 @@ checkBtn.addEventListener(
                     "/api/check",
                     {
                         method: "POST",
+
                         headers: {
                             "Content-Type":
                                 "application/json"
                         },
+
                         body: JSON.stringify({
                             recipients:
                                 recipientsInput.value
@@ -390,42 +383,36 @@ checkBtn.addEventListener(
                 await response.json();
 
             if (!response.ok) {
-
-                checkResult.className =
-                    "result error-result";
-
-                checkResult.textContent =
+                throw new Error(
                     data.error ||
-                    "Unable to check recipients.";
-
-                return;
+                    "Unable to check recipients."
+                );
             }
 
             let message =
-                `Valid recipients: ${data.count} / 25`;
+                `Valid recipients: ${data.count}`;
 
-            if (data.invalid &&
-                data.invalid.length) {
+            if (data.invalid.length) {
 
                 message +=
-                    "\nInvalid: " +
-                    data.invalid.join(", ");
+                    ` | Invalid: ${data.invalid.join(", ")}`;
+
             }
 
-            checkResult.className =
-                "result success-result";
-
-            checkResult.textContent =
-                message;
+            showStatus(
+                message,
+                data.invalid.length
+                    ? "warning"
+                    : "success"
+            );
 
         } catch (error) {
 
-            checkResult.className =
-                "result error-result";
+            showStatus(
+                error.message,
+                "error"
+            );
 
-            checkResult.textContent =
-                "Network error: " +
-                error.message;
         }
 
     }
@@ -434,66 +421,72 @@ checkBtn.addEventListener(
 
 sendBtn.addEventListener(
     "click",
-    async function () {
+    async () => {
 
-        const senderName =
-            document.getElementById(
-                "senderName"
-            ).value.trim();
+        const count =
+            parseLocalRecipients().length;
 
-        const senderEmail =
-            document.getElementById(
-                "senderEmail"
-            ).value.trim();
+        if (count === 0) {
 
-        const appPassword =
-            document.getElementById(
-                "appPassword"
-            ).value.trim();
+            showStatus(
+                "Please enter at least one recipient.",
+                "error"
+            );
 
-        const subject =
-            document.getElementById(
-                "subject"
-            ).value.trim();
+            return;
+        }
 
-        const body =
-            document.getElementById(
-                "body"
-            ).value.trim();
+        if (count > 25) {
 
-        const recipients =
-            recipientsInput.value.trim();
-
-
-        if (
-            !senderName ||
-            !senderEmail ||
-            !appPassword ||
-            !subject ||
-            !body ||
-            !recipients
-        ) {
-
-            sendResult.className =
-                "result error-result";
-
-            sendResult.textContent =
-                "Please complete all required fields.";
+            showStatus(
+                "Maximum 25 recipients are allowed.",
+                "error"
+            );
 
             return;
         }
 
 
+        const payload = {
+
+            sender_name:
+                document.getElementById(
+                    "sender_name"
+                ).value.trim(),
+
+            sender_email:
+                document.getElementById(
+                    "sender_email"
+                ).value.trim(),
+
+            app_password:
+                document.getElementById(
+                    "app_password"
+                ).value.trim(),
+
+            subject:
+                document.getElementById(
+                    "subject"
+                ).value.trim(),
+
+            body:
+                document.getElementById(
+                    "body"
+                ).value,
+
+            recipients:
+                recipientsInput.value
+
+        };
+
+
         sendBtn.disabled = true;
+        checkBtn.disabled = true;
 
-        sendBtn.textContent =
-            "Sending...";
-
-        sendResult.className =
-            "result info-result";
-
-        sendResult.textContent =
-            "Connecting to Gmail SMTP...";
+        showStatus(
+            "Connecting to Gmail SMTP and sending...",
+            "info"
+        );
 
 
         try {
@@ -503,31 +496,14 @@ sendBtn.addEventListener(
                     "/api/send",
                     {
                         method: "POST",
+
                         headers: {
                             "Content-Type":
                                 "application/json"
                         },
-                        body: JSON.stringify({
 
-                            sender_name:
-                                senderName,
-
-                            sender_email:
-                                senderEmail,
-
-                            app_password:
-                                appPassword,
-
-                            subject:
-                                subject,
-
-                            body:
-                                body,
-
-                            recipients:
-                                recipients
-
-                        })
+                        body:
+                            JSON.stringify(payload)
                     }
                 );
 
@@ -536,84 +512,138 @@ sendBtn.addEventListener(
                 await response.json();
 
 
-            if (!response.ok ||
-                !data.ok) {
-
-                sendResult.className =
-                    "result error-result";
-
-                sendResult.textContent =
+            if (!response.ok) {
+                throw new Error(
                     data.error ||
-                    "Email sending failed.";
-
-                return;
-            }
-
-
-            let resultText =
-                `Completed: ${data.sent} sent`;
-
-            if (data.failed) {
-
-                resultText +=
-                    `, ${data.failed} failed`;
-            }
-
-
-            if (
-                data.invalid &&
-                data.invalid.length
-            ) {
-
-                resultText +=
-                    "\nInvalid: " +
-                    data.invalid.join(", ");
-            }
-
-
-            if (
-                data.failures &&
-                data.failures.length
-            ) {
-
-                resultText +=
-                    "\n\nFailures:\n";
-
-                data.failures.forEach(
-                    failure => {
-
-                        resultText +=
-                            `${failure.email}: ${failure.error}\n`;
-
-                    }
+                    "Sending failed."
                 );
             }
 
 
-            sendResult.className =
-                data.failed
-                    ? "result info-result"
-                    : "result success-result";
+            resultCard.classList.remove(
+                "hidden"
+            );
 
-            sendResult.textContent =
-                resultText;
+
+            let html = `
+                <div class="result-grid">
+
+                    <div class="result-item">
+                        <span>Total</span>
+                        <strong>
+                            ${data.total}
+                        </strong>
+                    </div>
+
+                    <div class="result-item success-text">
+                        <span>Sent</span>
+                        <strong>
+                            ${data.sent}
+                        </strong>
+                    </div>
+
+                    <div class="result-item error-text">
+                        <span>Failed</span>
+                        <strong>
+                            ${data.failed}
+                        </strong>
+                    </div>
+
+                </div>
+            `;
+
+
+            if (data.invalid &&
+                data.invalid.length) {
+
+                html += `
+                    <div class="result-list">
+                        <strong>
+                            Invalid addresses
+                        </strong>
+                        <p>
+                            ${escapeHtml(
+                                data.invalid.join(", ")
+                            )}
+                        </p>
+                    </div>
+                `;
+
+            }
+
+
+            if (data.failures &&
+                data.failures.length) {
+
+                html += `
+                    <div class="result-list">
+                        <strong>
+                            Failed recipients
+                        </strong>
+                `;
+
+                data.failures.forEach(
+                    item => {
+
+                        html += `
+                            <p>
+                                <strong>
+                                    ${escapeHtml(
+                                        item.email
+                                    )}
+                                </strong>
+                                —
+                                ${escapeHtml(
+                                    item.error
+                                )}
+                            </p>
+                        `;
+
+                    }
+                );
+
+                html += "</div>";
+
+            }
+
+
+            resultBox.innerHTML = html;
+
+
+            showStatus(
+                `SMTP processing completed: ${data.sent} sent, ${data.failed} failed.`,
+                data.failed
+                    ? "warning"
+                    : "success"
+            );
 
 
         } catch (error) {
 
-            sendResult.className =
-                "result error-result";
+            showStatus(
+                error.message,
+                "error"
+            );
 
-            sendResult.textContent =
-                "Network error: " +
-                error.message;
+            resultCard.classList.remove(
+                "hidden"
+            );
+
+            resultBox.innerHTML = `
+                <div class="result-list">
+                    <strong>Sending error</strong>
+                    <p>
+                        ${escapeHtml(
+                            error.message
+                        )}
+                    </p>
+                </div>
+            `;
 
         } finally {
 
             sendBtn.disabled = false;
-
-            sendBtn.textContent =
-                "Send Emails";
+            checkBtn.disabled = false;
 
         }
 
