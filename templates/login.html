@@ -6,7 +6,6 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
     <title>Secure Mail Console - Login</title>
 
     <link
@@ -19,18 +18,17 @@
 
 <div class="login-card">
 
-    <div class="brand-icon">
-        ✉
+    <div class="brand">
+        <div class="brand-icon">✉</div>
+
+        <div>
+            <h1>Secure Mail Console</h1>
+            <p>Authorized email sending panel</p>
+        </div>
     </div>
 
-    <h1>Secure Mail Console</h1>
-
-    <p class="muted">
-        Sign in to continue
-    </p>
-
     {% if error %}
-        <div class="error-box">
+        <div class="alert error">
             {{ error }}
         </div>
     {% endif %}
@@ -40,33 +38,29 @@
         action="{{ url_for('login_post') }}"
     >
 
-        <label>
-            Username
-        </label>
+        <label>Username</label>
 
         <input
             type="text"
             name="username"
-            placeholder="Username"
+            placeholder="Enter username"
             autocomplete="username"
             required
         >
 
-        <label>
-            Password
-        </label>
+        <label>Password</label>
 
         <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Enter password"
             autocomplete="current-password"
             required
         >
 
         <button
             type="submit"
-            class="primary-btn full"
+            class="primary-btn"
         >
             Sign In
         </button>
