@@ -2,17 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Mail Login</title>
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Secure Mail Console - Login</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
 
 <body class="login-page">
 
 <div class="login-card">
 
-    <div class="logo">✉</div>
+    <div class="brand-icon">
+        ✉
+    </div>
 
     <h1>Secure Mail Console</h1>
 
@@ -21,33 +30,44 @@
     </p>
 
     {% if error %}
-    <div class="error">
-        {{ error }}
-    </div>
+        <div class="error-box">
+            {{ error }}
+        </div>
     {% endif %}
 
-    <form method="POST"
-          action="{{ url_for('login_post') }}">
+    <form
+        method="POST"
+        action="{{ url_for('login_post') }}"
+    >
 
-        <label>Username</label>
+        <label>
+            Username
+        </label>
 
         <input
             type="text"
             name="username"
             placeholder="Username"
+            autocomplete="username"
             required
         >
 
-        <label>Password</label>
+        <label>
+            Password
+        </label>
 
         <input
             type="password"
             name="password"
             placeholder="Password"
+            autocomplete="current-password"
             required
         >
 
-        <button type="submit">
+        <button
+            type="submit"
+            class="primary-btn full"
+        >
             Sign In
         </button>
 
