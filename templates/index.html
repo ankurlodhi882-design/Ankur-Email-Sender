@@ -1,614 +1,1525 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Secure Mail Console</title>
+<meta charset="utf-8">
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+>
+
+<meta
+    name="autocomplete"
+    content="off"
+>
+
+<title>Secure Mail Console</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+{% if turnstile_site_key %}
+<script
+src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+async
+defer
+></script>
+{% endif %}
+
 </head>
 
-<body>
+
+<body
+    autocomplete="off"
+>
+
 
 <header class="topbar">
 
-    <div>
-        <div class="top-title">Secure Mail Console</div>
-        <div class="top-subtitle">Bulk email management</div>
-    </div>
+<div class="brand">
 
-    <a href="/logout" class="logout-btn">Logout</a>
+<div class="brand-icon">
+<i class="fa-solid fa-shield-halved"></i>
+</div>
+
+<div class="brand-title">
+Secure Mail Console
+</div>
+
+</div>
+
+
+<a
+href="{{ url_for('logout') }}"
+class="logout-button"
+>
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+</a>
 
 </header>
 
 
 <main class="container">
 
-    <section class="hero">
-        <div>
-            <h1>Send Email</h1>
-            <p>
-                Send personalized messages to up to 25 authorized recipients.
-            </p>
-        </div>
 
-        <div class="status-pill">
-            <span></span>
-            Console Ready
-        </div>
-    </section>
+<div class="page-heading">
+
+<h1>
+<i class="fa-solid fa-paper-plane"></i>
+Bulk Email Sender
+</h1>
+
+</div>
 
 
-    <section class="grid">
-
-        <!-- SMTP SETTINGS -->
-        <div class="card">
-
-            <div class="card-heading">
-                <div>
-                    <h2>Sender & SMTP</h2>
-                    <p>Use a Gmail App Password.</p>
-                </div>
-            </div>
-
-            <label>Sender Name</label>
-            <input
-                id="senderName"
-                type="text"
-                placeholder="Your Name"
-                value="Ankur"
-            >
-
-            <label>Gmail Address</label>
-            <input
-                id="senderEmail"
-                type="email"
-                placeholder="you@gmail.com"
-            >
-
-            <label>Gmail App Password</label>
-
-            <input
-                id="appPassword"
-                type="password"
-                placeholder="16-character App Password"
-            >
-
-            <div class="small-note">
-                Use a Gmail App Password, not your normal Gmail password.
-            </div>
-
-            <button
-                type="button"
-                id="testSmtpBtn"
-                class="secondary-btn"
-            >
-                Test SMTP Login
-            </button>
-
-            <div id="smtpStatus" class="result-box hidden"></div>
-
-        </div>
+<div class="dashboard-grid">
 
 
-        <!-- MESSAGE -->
-        <div class="card">
+<!-- COMPOSE -->
 
-            <div class="card-heading">
-                <div>
-                    <h2>Message</h2>
-                    <p>Create your email content.</p>
-                </div>
-            </div>
-
-            <label>Subject</label>
-
-            <input
-                id="subject"
-                type="text"
-                placeholder="Enter email subject"
-            >
-
-            <label>Message</label>
-
-            <textarea
-                id="body"
-                rows="13"
-                placeholder="Hello {name},
-
-Write your message here."
-            ></textarea>
-
-            <div class="small-note">
-                Personalization: <strong>{name}</strong>
-            </div>
-
-        </div>
-
-    </section>
+<section class="card compose-card">
 
 
-    <!-- RECIPIENTS -->
-    <section class="card recipients-card">
+<div class="section-title">
 
-        <div class="card-heading recipient-heading">
+<i class="fa-solid fa-pen-to-square"></i>
 
-            <div>
-                <h2>Recipients</h2>
-                <p>
-                    Separate addresses with commas, spaces, or new lines.
-                </p>
-            </div>
+<span>
+Compose Message
+</span>
 
-            <div class="counter">
-                <strong id="recipientCount">0</strong> / 25
-            </div>
-
-        </div>
-
-        <textarea
-            id="recipients"
-            rows="8"
-            placeholder="person1@example.com
-person2@example.com
-person3@example.com"
-        ></textarea>
-
-        <div class="recipient-actions">
-
-            <button
-                type="button"
-                id="checkBtn"
-                class="secondary-btn"
-            >
-                Check Recipients
-            </button>
-
-            <button
-                type="button"
-                id="sendBtn"
-                class="primary-btn"
-            >
-                Send Bulk Email
-            </button>
-
-        </div>
-
-        <div id="recipientStatus" class="result-box hidden"></div>
-
-    </section>
+</div>
 
 
-    <!-- RESULTS -->
-    <section class="card">
-
-        <div class="card-heading">
-            <div>
-                <h2>Sending Results</h2>
-                <p>Results from the SMTP submission.</p>
-            </div>
-        </div>
-
-        <div id="sendStatus" class="result-box">
-            Ready to send.
-        </div>
-
-        <div id="results"></div>
-
-    </section>
+<div class="two-column">
 
 
-    <section class="info-card">
+<div class="field">
 
-        <strong>Delivery note</strong>
+<label>
+Sender Name
+</label>
 
-        <p>
-            SMTP acceptance means the receiving SMTP system accepted the
-            message for processing. It does not guarantee Inbox placement.
-            SPF, DKIM, DMARC, sender reputation, content, recipient engagement,
-            and mailbox-provider policies can affect delivery.
-        </p>
+<input
+id="senderName"
+type="text"
+autocomplete="off"
+placeholder="Your name"
+>
 
-    </section>
+</div>
+
+
+<div class="field">
+
+<label>
+Your Gmail
+</label>
+
+<input
+id="gmail"
+type="email"
+autocomplete="off"
+placeholder="your@gmail.com"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+App Password
+</label>
+
+<div class="password-field">
+
+<input
+id="appPassword"
+type="password"
+autocomplete="new-password"
+placeholder="Google App Password"
+>
+
+<button
+type="button"
+onclick="togglePassword()"
+>
+
+<i
+id="passwordIcon"
+class="fa-regular fa-eye"
+></i>
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Email Subject
+</label>
+
+<input
+id="subject"
+type="text"
+autocomplete="off"
+placeholder="Email subject"
+>
+
+</div>
+
+</div>
+
+
+<div class="field body-field">
+
+
+<div class="body-header">
+
+<label>
+Message Body
+</label>
+
+
+<div class="mode-buttons">
+
+<button
+id="plainButton"
+class="mode active"
+type="button"
+onclick="setMode(false)"
+>
+Plain Text
+</button>
+
+
+<button
+id="htmlButton"
+class="mode"
+type="button"
+onclick="setMode(true)"
+>
+HTML
+</button>
+
+</div>
+
+</div>
+
+
+<!-- IMPORTANT:
+     This textarea intentionally contains NOTHING.
+     Do not add default text here.
+-->
+
+<textarea
+id="messageBody"
+name="messageBody"
+autocomplete="off"
+autocorrect="off"
+autocapitalize="off"
+spellcheck="false"
+></textarea>
+
+
+</div>
+
+
+<!-- SPINTAX STATUS -->
+
+<div class="spintax-status">
+
+<i class="fa-solid fa-shuffle"></i>
+
+<div>
+
+<strong>
+Spintax Enabled
+</strong>
+
+<span>
+Spintax is always ON.
+</span>
+
+</div>
+
+</div>
+
+
+<div class="security-title">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Spam Protection
+
+</div>
+
+
+<div class="security-box">
+
+{% if turnstile_site_key %}
+
+<div
+class="cf-turnstile"
+data-sitekey="{{ turnstile_site_key }}"
+data-theme="light"
+data-callback="turnstileCompleted"
+data-expired-callback="turnstileExpired"
+data-error-callback="turnstileError"
+></div>
+
+{% else %}
+
+<div class="turnstile-warning">
+Turnstile Site Key is not configured.
+</div>
+
+{% endif %}
+
+</div>
+
+
+</section>
+
+
+<!-- RIGHT -->
+
+<section class="right-column">
+
+
+<div class="card recipients-card">
+
+
+<div class="section-title">
+
+<i class="fa-solid fa-users"></i>
+
+<span>
+Recipients
+</span>
+
+<span
+id="recipientCount"
+class="count-badge"
+>
+0 found
+</span>
+
+</div>
+
+
+<div class="recipient-subtitle">
+Paste emails (comma separated, new lines, or Excel copy)
+</div>
+
+
+<textarea
+id="recipients"
+class="recipients-box"
+autocomplete="off"
+spellcheck="false"
+></textarea>
+
+
+</div>
+
+
+<!-- PROGRESS -->
+
+<div class="card progress-card">
+
+
+<div class="section-title">
+
+<i class="fa-solid fa-chart-pie"></i>
+
+<span>
+Progress Monitor
+</span>
+
+</div>
+
+
+<div class="stats-grid">
+
+
+<div class="stat-box">
+
+<span>TOTAL</span>
+
+<strong id="totalCount">
+0
+</strong>
+
+</div>
+
+
+<div class="stat-box">
+
+<span>SENT</span>
+
+<strong
+id="sentCount"
+class="green"
+>
+0
+</strong>
+
+</div>
+
+
+<div class="stat-box">
+
+<span>FAILED</span>
+
+<strong
+id="failedCount"
+class="red"
+>
+0
+</strong>
+
+</div>
+
+
+<div class="stat-box">
+
+<span>REMAINING</span>
+
+<strong
+id="remainingCount"
+class="orange"
+>
+0
+</strong>
+
+</div>
+
+
+</div>
+
+
+<div class="progress-track">
+
+<div
+id="progressBar"
+class="progress-fill"
+></div>
+
+</div>
+
+
+<div
+id="status"
+class="status"
+>
+Ready to send
+</div>
+
+
+<div class="send-row">
+
+
+<button
+id="sendButton"
+class="send-button"
+type="button"
+onclick="sendBatch()"
+>
+
+<i class="fa-solid fa-paper-plane"></i>
+
+Send All
+
+</button>
+
+
+<button
+id="stopButton"
+class="stop-button"
+type="button"
+onclick="stopSending()"
+disabled
+>
+
+<i class="fa-solid fa-stop"></i>
+
+Stop Sending
+
+</button>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+</div>
 
 </main>
 
 
+<!-- COMPLETION POPUP -->
+
+<div
+id="completeModal"
+class="complete-modal"
+>
+
+<div
+class="complete-box"
+id="completeBox"
+>
+
+
+<div class="complete-icon">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+
+<div class="complete-title">
+sending compleate Babu❤️
+</div>
+
+
+<div
+id="completeDetails"
+class="complete-details"
+>
+All emails have been processed.
+</div>
+
+
+<button
+type="button"
+class="complete-button"
+onclick="closeCompletePopup()"
+>
+OK
+</button>
+
+
+</div>
+
+</div>
+
+
+<div
+id="toast"
+class="toast"
+></div>
+
+
 <script>
 
-const senderName = document.getElementById("senderName");
-const senderEmail = document.getElementById("senderEmail");
-const appPassword = document.getElementById("appPassword");
+let isHTML = false;
 
-const subject = document.getElementById("subject");
-const body = document.getElementById("body");
-const recipients = document.getElementById("recipients");
+let sending = false;
 
-const recipientCount = document.getElementById("recipientCount");
+let turnstileToken = "";
 
-const testSmtpBtn = document.getElementById("testSmtpBtn");
-const checkBtn = document.getElementById("checkBtn");
-const sendBtn = document.getElementById("sendBtn");
-
-const smtpStatus = document.getElementById("smtpStatus");
-const recipientStatus = document.getElementById("recipientStatus");
-const sendStatus = document.getElementById("sendStatus");
-const results = document.getElementById("results");
+let currentController = null;
 
 
-function parseRecipients() {
+/*
+=========================================================
+FORCE MESSAGE BODY BLANK
+=========================================================
+*/
 
-    return recipients.value
-        .split(/[\s,;]+/)
-        .map(x => x.trim().toLowerCase())
-        .filter(Boolean)
-        .filter((value, index, array) => array.indexOf(value) === index);
+function forceBlankMessageBody() {
+
+    const body =
+        document.getElementById(
+            "messageBody"
+        );
+
+    if (body) {
+        body.value = "";
+        body.defaultValue = "";
+    }
+}
+
+
+/*
+Run immediately after DOM is ready.
+This also clears any browser-restored value.
+*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        forceBlankMessageBody();
+
+        setTimeout(
+            forceBlankMessageBody,
+            50
+        );
+
+        setTimeout(
+            forceBlankMessageBody,
+            300
+        );
+
+    }
+);
+
+
+/*
+Also clear when browser restores page
+from back/forward cache.
+*/
+
+window.addEventListener(
+    "pageshow",
+    function() {
+        forceBlankMessageBody();
+    }
+);
+
+
+/*
+=========================================================
+TURNSTILE
+=========================================================
+*/
+
+function turnstileCompleted(token) {
+    turnstileToken = token || "";
+}
+
+function turnstileExpired() {
+    turnstileToken = "";
+}
+
+function turnstileError() {
+    turnstileToken = "";
+}
+
+
+/*
+=========================================================
+PASSWORD
+=========================================================
+*/
+
+function togglePassword() {
+
+    const input =
+        document.getElementById(
+            "appPassword"
+        );
+
+    const icon =
+        document.getElementById(
+            "passwordIcon"
+        );
+
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.className =
+            "fa-regular fa-eye-slash";
+
+    } else {
+
+        input.type = "password";
+
+        icon.className =
+            "fa-regular fa-eye";
+
+    }
+}
+
+
+/*
+=========================================================
+MODE
+=========================================================
+*/
+
+function setMode(htmlMode) {
+
+    isHTML = htmlMode;
+
+
+    document
+        .getElementById("plainButton")
+        .classList.toggle(
+            "active",
+            !htmlMode
+        );
+
+
+    document
+        .getElementById("htmlButton")
+        .classList.toggle(
+            "active",
+            htmlMode
+        );
+}
+
+
+/*
+=========================================================
+EMAIL
+=========================================================
+*/
+
+function isValidEmail(email) {
+
+    return /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$/
+        .test(email);
 
 }
 
 
-function updateCount() {
+/*
+=========================================================
+RECIPIENTS
+=========================================================
+*/
 
-    const list = parseRecipients();
+function getRecipients() {
 
-    recipientCount.textContent = list.length;
+    const value =
+        document
+            .getElementById(
+                "recipients"
+            )
+            .value;
 
-    if (list.length > 25) {
-        recipientCount.classList.add("danger-text");
-    } else {
-        recipientCount.classList.remove("danger-text");
+
+    const pieces =
+        value.split(
+            /[\s,;]+/
+        );
+
+
+    const unique = [];
+
+
+    for (const piece of pieces) {
+
+        const email =
+            piece
+                .trim()
+                .toLowerCase();
+
+
+        if (!email) continue;
+
+        if (!isValidEmail(email)) continue;
+
+        if (!unique.includes(email)) {
+
+            unique.push(email);
+
+        }
+
     }
 
+
+    return unique.slice(
+        0,
+        25
+    );
 }
 
 
-recipients.addEventListener("input", updateCount);
+function updateRecipientCount() {
+
+    const list =
+        getRecipients();
 
 
-function showBox(element, message, type = "success") {
+    document
+        .getElementById(
+            "recipientCount"
+        )
+        .textContent =
+        list.length + " found";
 
-    element.className = "result-box " + type;
-    element.textContent = message;
 
+    if (!sending) {
+
+        document
+            .getElementById(
+                "totalCount"
+            )
+            .textContent =
+            list.length;
+
+
+        document
+            .getElementById(
+                "remainingCount"
+            )
+            .textContent =
+            list.length;
+
+    }
 }
 
 
-function escapeHtml(value) {
+document
+    .getElementById(
+        "recipients"
+    )
+    .addEventListener(
+        "input",
+        updateRecipientCount
+    );
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
 
+/*
+=========================================================
+STATUS
+=========================================================
+*/
+
+function setStatus(
+    message,
+    type = ""
+) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.textContent =
+        message;
+
+
+    status.className =
+        "status " + type;
 }
 
 
-testSmtpBtn.addEventListener("click", async () => {
+/*
+=========================================================
+PROGRESS
+=========================================================
+*/
 
-    showBox(smtpStatus, "Testing SMTP login...", "info");
+function updateProgress(
+    total,
+    sent,
+    failed,
+    remaining
+) {
 
-    testSmtpBtn.disabled = true;
+    const completed =
+        sent + failed;
+
+
+    const percent =
+        total > 0
+            ? Math.round(
+                completed /
+                total *
+                100
+            )
+            : 0;
+
+
+    document
+        .getElementById(
+            "totalCount"
+        )
+        .textContent =
+        total;
+
+
+    document
+        .getElementById(
+            "sentCount"
+        )
+        .textContent =
+        sent;
+
+
+    document
+        .getElementById(
+            "failedCount"
+        )
+        .textContent =
+        failed;
+
+
+    document
+        .getElementById(
+            "remainingCount"
+        )
+        .textContent =
+        remaining;
+
+
+    document
+        .getElementById(
+            "progressBar"
+        )
+        .style.width =
+        percent + "%";
+}
+
+
+/*
+=========================================================
+POPUP
+=========================================================
+*/
+
+function showCompletePopup(
+    sent,
+    failed
+) {
+
+    document
+        .getElementById(
+            "completeDetails"
+        )
+        .textContent =
+        `${sent} sent${failed ? ` • ${failed} failed` : ""}`;
+
+
+    document
+        .getElementById(
+            "completeModal"
+        )
+        .classList.add(
+            "show"
+        );
+}
+
+
+function closeCompletePopup() {
+
+    document
+        .getElementById(
+            "completeModal"
+        )
+        .classList.remove(
+            "show"
+        );
+}
+
+
+/*
+=========================================================
+CLOSE POPUP BY CLICKING ANYWHERE
+=========================================================
+*/
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const modal =
+            document.getElementById(
+                "completeModal"
+            );
+
+
+        if (
+            modal &&
+            modal.classList.contains(
+                "show"
+            )
+        ) {
+
+            /*
+            Clicking anywhere closes it.
+            */
+
+            closeCompletePopup();
+
+        }
+
+    }
+);
+
+
+/*
+=========================================================
+CLOSE POPUP WITH ANY KEY
+=========================================================
+*/
+
+document.addEventListener(
+    "keydown",
+    function() {
+
+        const modal =
+            document.getElementById(
+                "completeModal"
+            );
+
+
+        if (
+            modal &&
+            modal.classList.contains(
+                "show"
+            )
+        ) {
+
+            closeCompletePopup();
+
+        }
+
+    }
+);
+
+
+/*
+=========================================================
+SEND
+=========================================================
+*/
+
+async function sendBatch() {
+
+    if (sending) return;
+
+
+    const senderName =
+        document
+            .getElementById(
+                "senderName"
+            )
+            .value
+            .trim();
+
+
+    const gmail =
+        document
+            .getElementById(
+                "gmail"
+            )
+            .value
+            .trim();
+
+
+    const appPassword =
+        document
+            .getElementById(
+                "appPassword"
+            )
+            .value
+            .trim();
+
+
+    const subject =
+        document
+            .getElementById(
+                "subject"
+            )
+            .value
+            .trim();
+
+
+    const body =
+        document
+            .getElementById(
+                "messageBody"
+            )
+            .value;
+
+
+    const recipients =
+        getRecipients();
+
+
+    if (!senderName) {
+
+        showToast(
+            "Enter Sender Name."
+        );
+
+        return;
+    }
+
+
+    if (!isValidEmail(gmail)) {
+
+        showToast(
+            "Enter a valid Gmail address."
+        );
+
+        return;
+    }
+
+
+    if (!appPassword) {
+
+        showToast(
+            "Enter Google App Password."
+        );
+
+        return;
+    }
+
+
+    if (!subject) {
+
+        showToast(
+            "Enter email subject."
+        );
+
+        return;
+    }
+
+
+    if (!body.trim()) {
+
+        showToast(
+            "Enter message body."
+        );
+
+        return;
+    }
+
+
+    if (!recipients.length) {
+
+        showToast(
+            "Add at least one valid recipient."
+        );
+
+        return;
+    }
+
+
+    if (!turnstileToken) {
+
+        showToast(
+            "Complete Cloudflare verification."
+        );
+
+        return;
+    }
+
+
+    sending = true;
+
+
+    currentController =
+        new AbortController();
+
+
+    const sendButton =
+        document.getElementById(
+            "sendButton"
+        );
+
+
+    const stopButton =
+        document.getElementById(
+            "stopButton"
+        );
+
+
+    sendButton.disabled = true;
+
+    stopButton.disabled = false;
+
+
+    updateProgress(
+        recipients.length,
+        0,
+        0,
+        recipients.length
+    );
+
+
+    setStatus(
+        "Sending emails...",
+        "sending"
+    );
+
 
     try {
 
-        const response = await fetch("/api/test-smtp", {
+        const response =
+            await fetch(
+                "/send-batch",
+                {
+                    method: "POST",
 
-            method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                    signal:
+                        currentController.signal,
 
-            body: JSON.stringify({
-                sender_email: senderEmail.value.trim(),
-                app_password: appPassword.value.trim()
-            })
+                    body: JSON.stringify({
 
-        });
+                        sender_name:
+                            senderName,
 
-        const data = await response.json();
+                        gmail:
+                            gmail,
 
-        if (data.ok) {
-            showBox(
-                smtpStatus,
-                data.message,
-                "success"
+                        app_password:
+                            appPassword,
+
+                        subject:
+                            subject,
+
+                        body:
+                            body,
+
+                        is_html:
+                            isHTML,
+
+                        recipients:
+                            recipients,
+
+                        turnstile_token:
+                            turnstileToken
+
+                    })
+                }
             );
-        } else {
-            showBox(
-                smtpStatus,
-                data.error || "SMTP login failed.",
-                "error"
+
+
+        if (!response.ok) {
+
+            let message =
+                "Sending request failed.";
+
+
+            try {
+
+                const data =
+                    await response.json();
+
+                message =
+                    data.message ||
+                    message;
+
+            } catch (e) {}
+
+
+            throw new Error(
+                message
             );
         }
 
-    } catch (error) {
 
-        showBox(
-            smtpStatus,
-            "Request failed: " + error.message,
-            "error"
-        );
-
-    } finally {
-
-        testSmtpBtn.disabled = false;
-
-    }
-
-});
+        const reader =
+            response.body.getReader();
 
 
-checkBtn.addEventListener("click", async () => {
+        const decoder =
+            new TextDecoder(
+                "utf-8"
+            );
 
-    showBox(
-        recipientStatus,
-        "Checking recipients...",
-        "info"
-    );
 
-    try {
+        let buffer = "";
 
-        const response = await fetch("/api/check", {
 
-            method: "POST",
+        while (true) {
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+            const {
+                value,
+                done
+            } =
+                await reader.read();
 
-            body: JSON.stringify({
-                recipients: recipients.value
-            })
 
-        });
+            if (done) break;
 
-        const data = await response.json();
 
-        if (!data.ok) {
+            buffer +=
+                decoder.decode(
+                    value,
+                    {
+                        stream: true
+                    }
+                );
 
-            let message = data.error || "Recipient check failed.";
 
-            if (data.invalid && data.invalid.length) {
-                message +=
-                    " Invalid: " +
-                    data.invalid.join(", ");
+            const lines =
+                buffer.split(
+                    "\n"
+                );
+
+
+            buffer =
+                lines.pop() || "";
+
+
+            for (
+                const line
+                of lines
+            ) {
+
+                if (!line.trim()) {
+                    continue;
+                }
+
+
+                let event;
+
+
+                try {
+
+                    event =
+                        JSON.parse(
+                            line
+                        );
+
+                } catch (e) {
+
+                    continue;
+                }
+
+
+                if (
+                    event.type ===
+                    "start"
+                ) {
+
+                    updateProgress(
+                        event.total,
+                        event.sent,
+                        event.failed,
+                        event.remaining
+                    );
+
+                }
+
+
+                else if (
+                    event.type ===
+                    "progress"
+                ) {
+
+                    updateProgress(
+                        event.total,
+                        event.sent,
+                        event.failed,
+                        event.remaining
+                    );
+
+
+                    setStatus(
+                        `Sending emails... ${event.sent}/${event.total}`,
+                        "sending"
+                    );
+
+                }
+
+
+                else if (
+                    event.type ===
+                    "complete"
+                ) {
+
+                    updateProgress(
+                        event.total,
+                        event.sent,
+                        event.failed,
+                        event.remaining
+                    );
+
+
+                    setStatus(
+                        event.message,
+                        "success"
+                    );
+
+
+                    showCompletePopup(
+                        event.sent,
+                        event.failed
+                    );
+
+                }
+
+
+                else if (
+                    event.type ===
+                    "error"
+                ) {
+
+                    updateProgress(
+                        event.total ||
+                        recipients.length,
+
+                        event.sent || 0,
+
+                        event.failed || 0,
+
+                        event.remaining ?? 0
+                    );
+
+
+                    setStatus(
+                        event.message ||
+                        "Sending failed.",
+                        "error"
+                    );
+
+
+                    showToast(
+                        event.message ||
+                        "Sending failed."
+                    );
+
+                }
+
             }
 
-            showBox(
-                recipientStatus,
-                message,
-                "error"
-            );
-
-            return;
         }
 
-        showBox(
-            recipientStatus,
-            `${data.count} recipient(s) are valid.`,
-            "success"
-        );
 
     } catch (error) {
 
-        showBox(
-            recipientStatus,
-            "Request failed: " + error.message,
-            "error"
-        );
+        if (
+            error.name ===
+            "AbortError"
+        ) {
 
-    }
-
-});
-
-
-sendBtn.addEventListener("click", async () => {
-
-    const list = parseRecipients();
-
-    if (!senderEmail.value.trim()) {
-        showBox(smtpStatus, "Enter sender Gmail address.", "error");
-        return;
-    }
-
-    if (!appPassword.value.trim()) {
-        showBox(smtpStatus, "Enter Gmail App Password.", "error");
-        return;
-    }
-
-    if (!subject.value.trim()) {
-        showBox(sendStatus, "Enter a subject.", "error");
-        return;
-    }
-
-    if (!body.value.trim()) {
-        showBox(sendStatus, "Enter a message.", "error");
-        return;
-    }
-
-    if (!list.length) {
-        showBox(sendStatus, "Enter at least one recipient.", "error");
-        return;
-    }
-
-    if (list.length > 25) {
-        showBox(
-            sendStatus,
-            "Maximum 25 recipients are allowed.",
-            "error"
-        );
-        return;
-    }
-
-
-    const confirmed = confirm(
-        `Send this message to ${list.length} recipient(s)?`
-    );
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    sendBtn.disabled = true;
-    checkBtn.disabled = true;
-
-    showBox(
-        sendStatus,
-        "Connecting to SMTP and sending...",
-        "info"
-    );
-
-    results.innerHTML = "";
-
-
-    try {
-
-        const response = await fetch("/api/send", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-
-                sender_name: senderName.value.trim(),
-                sender_email: senderEmail.value.trim(),
-                app_password: appPassword.value.trim(),
-
-                subject: subject.value.trim(),
-                body: body.value,
-
-                recipients: recipients.value
-
-            })
-
-        });
-
-
-        const data = await response.json();
-
-
-        if (!response.ok || (!data.sent && !data.ok)) {
-
-            showBox(
-                sendStatus,
-                data.error || "Sending failed.",
+            setStatus(
+                "Sending stopped.",
                 "error"
             );
 
-            return;
-        }
 
-
-        if (data.partial) {
-
-            showBox(
-                sendStatus,
-                `Completed: ${data.sent} sent, ${data.failed} failed.`,
-                "info"
+            showToast(
+                "Sending stopped."
             );
 
         } else {
 
-            showBox(
-                sendStatus,
-                `${data.sent} message(s) accepted by SMTP.`,
-                "success"
+            setStatus(
+                error.message ||
+                "Connection error.",
+                "error"
+            );
+
+
+            showToast(
+                error.message ||
+                "Unable to contact server."
             );
 
         }
 
-
-        let html = "";
-
-
-        if (data.sent_items && data.sent_items.length) {
-
-            html += `
-                <div class="result-section">
-                    <h3>Accepted by SMTP</h3>
-                    <ul>
-            `;
-
-            data.sent_items.forEach(item => {
-
-                html += `
-                    <li>
-                        <span class="success-dot">●</span>
-                        ${escapeHtml(item.email)}
-                    </li>
-                `;
-
-            });
-
-            html += `
-                    </ul>
-                </div>
-            `;
-
-        }
-
-
-        if (data.failed_items && data.failed_items.length) {
-
-            html += `
-                <div class="result-section">
-                    <h3>Failed</h3>
-                    <ul>
-            `;
-
-            data.failed_items.forEach(item => {
-
-                html += `
-                    <li>
-                        <span class="danger-dot">●</span>
-                        ${escapeHtml(item.email)}
-                        <small>
-                            ${escapeHtml(item.error)}
-                        </small>
-                    </li>
-                `;
-
-            });
-
-            html += `
-                    </ul>
-                </div>
-            `;
-
-        }
-
-
-        results.innerHTML = html;
-
-
-    } catch (error) {
-
-        showBox(
-            sendStatus,
-            "Request failed: " + error.message,
-            "error"
-        );
-
-    } finally {
-
-        sendBtn.disabled = false;
-        checkBtn.disabled = false;
-
     }
 
-});
+
+    sending = false;
+
+    currentController = null;
+
+    sendButton.disabled = false;
+
+    stopButton.disabled = true;
+}
 
 
-updateCount();
+/*
+=========================================================
+STOP
+=========================================================
+*/
+
+function stopSending() {
+
+    if (
+        !sending ||
+        !currentController
+    ) {
+        return;
+    }
+
+
+    currentController.abort();
+
+
+    setStatus(
+        "Stopping...",
+        "error"
+    );
+}
+
+
+/*
+=========================================================
+TOAST
+=========================================================
+*/
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        function() {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        3500
+    );
+}
+
+
+/*
+Initial state
+*/
+
+updateRecipientCount();
+
+forceBlankMessageBody();
 
 </script>
 
